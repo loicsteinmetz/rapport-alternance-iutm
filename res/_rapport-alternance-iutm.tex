@@ -1,0 +1,47 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}    
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{newtxtext,newtxmath}
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+\usepackage[explicit]{titlesec}
+\newlength\chapnumb
+\setlength\chapnumb{2.5cm}
+\titleformat{\chapter}[block]{}{}{0pt} {
+  \parbox[b]{\chapnumb} {
+    \fontsize{80}{110}\selectfont\thechapter
+  }
+  \parbox[b]{\dimexpr\textwidth-\chapnumb\relax} {
+    \raggedleft
+    \hfill{\LARGE#1}\\
+    \rule{\dimexpr\textwidth-\chapnumb\relax}{0.4pt}
+  }
+}
+\titleformat{name=\chapter,numberless}[block]{}{}{0pt} {
+  \parbox[b]{\chapnumb}{
+    \mbox{}
+  }
+  \parbox[b]{\dimexpr\textwidth-\chapnumb\relax}{
+    \raggedleft
+    \hfill{\LARGE#1}\\
+    \rule{\dimexpr\textwidth-\chapnumb\relax}{0.4pt}
+  }
+}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=black,
+    linkcolor= black,
+    citecolor=black
+}
+\usepackage{graphicx}
+\usepackage[stable]{footmisc}
+\usepackage{wrapfig}
+
+\begin{document}
+
+Test
+
+\end{document}
