@@ -1,0 +1,249 @@
+\documentclass[a4paper, 12pt]{report}
+\usepackage[utf8]{inputenc}    
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{newtxtext,newtxmath}
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+\usepackage[explicit]{titlesec}
+\usepackage{graphicx}
+\usepackage[stable]{footmisc}
+\usepackage{wrapfig}
+\usepackage{multicol}
+\usepackage{minitoc}
+\usepackage{plantuml}
+
+%* Config
+
+\titleformat{\chapter}[display]{}{}{0pt} {
+  \parbox{\textwidth} {
+    \textbf{\fontsize{30}{30}\selectfont\thechapter.\hspace{0.5cm}\LARGE#1}\\
+    \rule{\textwidth}{0.4pt}
+  }
+}
+\titleformat{name=\chapter,numberless}[display]{}{}{0pt} {
+  \parbox{\textwidth}{
+    \LARGE\textbf{#1}\\
+    \rule{\textwidth}{0.4pt}
+  }
+}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=black,
+    linkcolor= black,
+    citecolor=black
+}
+
+\mtcsetrules{*}{off}
+
+\begin{document}
+\doparttoc
+\renewcommand \partname{\thispagestyle{empty}}
+
+%* Page de garde
+
+\thispagestyle{empty}
+\begin{center}  
+\begin{multicols}{2}
+  \flushleft
+  \null
+  \includegraphics[width=\columnwidth]{../res/logo-iut.png}
+  \flushright
+  \null
+  \vspace{0.3cm}
+  \large{Promotion 2020-2021}
+\end{multicols}
+\vspace{2cm}
+\LARGE{\textit{Mise en place de traitements massifs et asynchrones dans le cadre de l'import de relèves}}\\
+\vspace{2cm}
+\large{\textbf{Mémoire présenté en septembre 2021 par}}\\
+\vspace{0.5cm}
+\Large{\textit{Loïc STEINMETZ}}\\
+\vspace{2cm}
+\large{\textbf{En vue de l'obtention de la Licence Professionnelle}}\\
+\vspace{0.5cm}
+\fbox{
+  \begin{minipage}{12cm}
+    \begin{center}
+      \null
+      \vspace{0.3cm}
+      \textbf{Métiers de l'Informatique}\\
+      Conception, développement et test de logiciels\\
+      Parcours Métiers du Génie Logiciel\\
+      \null
+    \end{center}
+  \end{minipage}
+}
+\vspace{2.8cm}
+\begin{multicols}{2}
+  \flushleft
+  \null
+  \textbf{Alternance effectuée à :}\\
+  Efluid\\
+  2 bis, rue Ardant du Picq\\
+  CS 10100 57004 METZ Cedex 01\\
+  \flushright
+  \null
+  \includegraphics[width=.6\columnwidth]{../res/logo-efluid.jpg}
+\end{multicols}
+\end{center}
+
+\clearpage
+\thispagestyle{empty}
+\null
+\clearpage
+
+\thispagestyle{empty}
+\begin{center}  
+\begin{multicols}{2}
+  \flushleft
+  \null
+  \includegraphics[width=\columnwidth]{../res/logo-iut.png}
+  \flushright
+  \null
+  \vspace{0.3cm}
+  \large{Promotion 2020-2021}
+\end{multicols}
+\vspace{2cm}
+\LARGE{\textit{Mise en place de traitements massifs et asynchrones dans le cadre de l'import de relèves}}\\
+\vspace{2cm}
+\large{\textbf{Mémoire présenté en septembre 2021 par}}\\
+\vspace{0.5cm}
+\Large{\textit{Loïc STEINMETZ}}\\
+\vspace{2cm}
+\large{\textbf{En vue de l'obtention de la Licence Professionnelle}}\\
+\vspace{0.5cm}
+\fbox{
+  \begin{minipage}{12cm}
+    \begin{center}
+      \null
+      \vspace{0.3cm}
+      \textbf{Métiers de l'Informatique}\\
+      Conception, développement et test de logiciels\\
+      Parcours Métiers du Génie Logiciel\\
+      \null
+    \end{center}
+  \end{minipage}
+}
+\vspace{2.8cm}
+\begin{multicols}{2}
+  \flushleft
+  \null
+  \textbf{Alternance effectuée à :}\\
+  Efluid\\
+  2 bis, rue Ardant du Picq\\
+  CS 10100 57004 METZ Cedex 01\\
+  \flushright
+  \null
+  \includegraphics[width=.6\columnwidth]{../res/logo-efluid.jpg}
+\end{multicols}
+\end{center}
+
+%* Remerciements
+
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+\thispagestyle{empty}
+
+Je remercie tout particulièrement mon maître de stage, Alexandre L'HUILLIER, pour m'avoir fait bénéficier de ses compétences tout au long de mon année d'alternance. Merci à lui pour son professionalisme, sa confiance et sa disponibilité.\\
+
+Je remercie également Jean-Luc THIRY, chef de service et Didier GRZEJSZCZAK, chef de filière, pour leur accompagnement général et pour ma bonne intégration au sein de l'entreprise.\\
+
+Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai été intégré et que je n'ai pas encore cités : Patrice FRANTZ, Julien KEMPF, Fabienne MAMET, François MOLIN, Roderick PIERRE, Stéphane POIROT et Stéphane ROEDEL.
+
+%* Table des matières : mémoire
+
+\part{Mémoire}
+\renewcommand{\clearpage}{}
+\chapter*{Sommaire}
+\renewcommand\ptctitle{}
+\parttoc
+\thispagestyle{empty}
+\renewcommand{\clearpage}{\newpage}
+\clearpage
+
+%* Abstract
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+\textit{Cf. annexe} \ref{appendix:foo}
+
+%* Introduction
+
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+
+%* Présentation de l'entreprise
+
+\chapter{Présentation de l'entreprise}
+
+%* Sujets traités
+
+\chapter{Sujets traités}
+
+\section{Généralités}
+\section{Développements courants}
+\section{Projet principal}
+
+%* Traitement des sujets
+
+\chapter{Traitement du projet principal}
+
+\section{Analyses préliminaires}
+\section{Formalisation du besoin et planification}
+\section{Conception techniques}
+\section{Développements fonctionnels}
+\section{Tests}
+
+%* Conclusion
+
+\chapter*{Conclusion}
+\addcontentsline{toc}{chapter}{Conclusion}
+
+%* Table des matières : annexes
+
+\part{Annexes}
+\renewcommand{\clearpage}{}
+\chapter*{Table des annexes}
+\renewcommand\ptctitle{}
+\parttoc
+\thispagestyle{empty}
+\renewcommand{\clearpage}{\newpage}
+\appendix
+
+%* Annexes
+
+\chapter{Foo}
+\label{appendix:foo}
+
+{
+  \sffamily{
+    \begin{plantuml}
+      @startuml
+      skinparam monochrome true
+      class Alice {
+        id: string
+      }
+      class Bob
+      Alice -- Bob
+      @enduml 
+    \end{plantuml}
+  }
+}
+
+%* Tables des matières : général
+
+\tableofcontents
+\thispagestyle{empty}
+
+%* Résumé
+
+\chapter*{Résumé}
+\thispagestyle{empty}
+
+Résumé.
+
+\end{document}

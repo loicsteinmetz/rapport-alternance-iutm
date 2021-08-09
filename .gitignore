@@ -5,5 +5,10 @@
 *.out
 *.gz
 *.toc
+*.ptc*
+*.maf
+*.mtc*
 *(busy)
 _*.pdf
+*.latex
+*.txt
