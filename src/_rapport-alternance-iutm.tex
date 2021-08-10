@@ -493,6 +493,10 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
 \chapter{Traitement de la demande de publication}
 \label{appendix:process}
 
+\begin{itemize}
+  \item \textbf{Structure des traitements :}\\
+\end{itemize}
+
 \begin{center}
   \begin{plantuml}
     @startuml
@@ -509,38 +513,20 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
 \end{center}
 \vspace{0.5cm}
 
-\begin{center}
-  \begin{plantuml}
-    @startuml
-
-    skinparam monochrome true
-    left to right direction
-    scale 250 width
-
-    circle Traitements
-    rectangle "Saisie TP" as TP
-    rectangle "Auto-relève lors d'une demande de prestation" as AR
-    rectangle "CRI avec saisie relève" as CRI
-    rectangle REL005MT
-    rectangle FAC006MT
-    rectangle FAC020MT
-    rectangle FAC002MT
-    rectangle REL019MT
-    rectangle LKY06 #BBB
-
-    Traitements -- TP
-    Traitements -- AR
-    Traitements -- CRI
-    Traitements -- REL005MT
-    Traitements -- FAC006MT
-    Traitements -- FAC020MT
-    Traitements -- FAC002MT
-    Traitements -- REL019MT
-    Traitements -- LKY06
-
-    @enduml
-  \end{plantuml}
-\end{center}
+\begin{itemize}
+  \item \textbf{Processus appelants :}\\
+  \begin{itemize}
+    \item Saisie d'une relève par un agent
+    \item Auto-relève lors d'une demande de prestation
+    \item CRI\footnote{Compte-Rendu d'Intervention} avec saisie d'une relève
+    \item REL005MT : Batch de calcul des consommations
+    \item REL019MT : Batch d'import des télérelèves gaz
+    \item FAC002MT : Batch d'estimation des relèves pour EDP\footnote{Elément De Population} facturable
+    \item FAC006MT : Batch de calcul des factures
+    \item FAC020MT : Batch d'estimation des relèves pour EDP non factuable
+    \item \underline{LKY06} : Interface de récupération des données \textit{Linky}
+  \end{itemize}
+\end{itemize}
 
 %* Annexe : Strategy
 
@@ -647,6 +633,94 @@ public class Process {
       }    
   }
   \end{lstlisting}
+
+  %* Annexe : Strategy
+
+\chapter{Batch : architecture et implémentation}
+\label{appendix:batch}
+
+\begin{itemize}
+  \item \textbf{Architecture :}\\
+\end{itemize}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    scale 450 height
+    skinparam monochrome true
+
+    abstract class ProgramBatchDAO
+    abstract class ProgramBatch
+    class ParallelJobLauncher
+    abstract class AbstractAppBatchJob
+    abstract class BatchJobDAO
+
+    ProgramBatch .u.> ProgramBatchDAO
+    ProgramBatch .d.> ParallelJobLauncher
+    ParallelJobLauncher .d.> AbstractAppBatchJob
+    AbstractAppBatchJob .d.> BatchJobDAO
+
+    @enduml
+  \end{plantuml}
+\end{center}
+\clearpage
+
+\begin{itemize}
+  \item \textbf{Implémentation :}\\
+\end{itemize}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    scale 250 height
+
+    class DemandePublicationRekeveProgramDAO
+    class ERequeteDemandePublicationReleveBatchDAO
+    class DemandePublicationReleveJobDAO
+
+    DemandePublicationRekeveProgramDAO .d.> ERequeteDemandePublicationReleveBatchDAO
+    DemandePublicationReleveJobDAO .u.> ERequeteDemandePublicationReleveBatchDAO
+
+    @enduml
+  \end{plantuml}
+\end{center}
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    scale 150 height
+
+    class DemandePublicationReleveProgram
+    class DemandePublicationReleveBatchConstantes
+
+    DemandePublicationReleveProgram .d.> DemandePublicationReleveBatchConstantes
+
+    @enduml
+  \end{plantuml}
+\end{center}
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    left to right direction
+
+    class DemandePublicationReleveJob
+    class GestionDemandePublicationReleveProcess #BBB
+    class ECountDemandePublicationReleveType
+    class DemandePublicationReleveBatchDAOExceptions
+
+    DemandePublicationReleveJob ..> GestionDemandePublicationReleveProcess
+    DemandePublicationReleveJob ..> ECountDemandePublicationReleveType
+    DemandePublicationReleveJob ..> DemandePublicationReleveBatchDAOExceptions
+
+    @enduml
+  \end{plantuml}
+\end{center}
 
 %* Tables des matières : général
 
