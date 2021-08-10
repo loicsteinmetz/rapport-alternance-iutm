@@ -15,8 +15,6 @@
 \usepackage{plantuml}
 \usepackage{listings}
 
-%* Config
-
 \titleformat{\chapter}[display]{}{}{0pt} {
   \parbox{\textwidth} {
     \textbf{\fontsize{30}{30}\selectfont\thechapter.\hspace{0.5cm}\LARGE#1}\\
@@ -67,8 +65,6 @@
 \renewcommand \partname{\thispagestyle{empty}}
 \doparttoc
 
-%* Page de garde
-
 \thispagestyle{empty}
 \begin{center}  
 \begin{multicols}{2}
@@ -81,7 +77,7 @@
   \large{Promotion 2020-2021}
 \end{multicols}
 \vspace{2cm}
-\LARGE{\textit{Mise en place de traitements massifs et asynchrones dans le cadre de l'import de relèves}}\\
+\LARGE{\textit{Mise en place de traitements de masse relatifs à la relève des compteurs communiquants}}\\
 \vspace{2cm}
 \large{\textbf{Mémoire présenté en septembre 2021 par}}\\
 \vspace{0.5cm}
@@ -132,7 +128,7 @@
   \large{Promotion 2020-2021}
 \end{multicols}
 \vspace{2cm}
-\LARGE{\textit{Mise en place de traitements massifs et asynchrones dans le cadre de l'import de relèves}}\\
+\LARGE{\textit{Mise en place de traitements de masse relatifs à la relève des compteurs communiquants}}\\
 \vspace{2cm}
 \large{\textbf{Mémoire présenté en septembre 2021 par}}\\
 \vspace{0.5cm}
@@ -166,8 +162,6 @@
 \end{multicols}
 \end{center}
 
-%* Remerciements
-
 \chapter*{Remerciements}
 \addcontentsline{toc}{chapter}{Remerciements}
 \thispagestyle{empty}
@@ -178,8 +172,6 @@ Je remercie également Jean-Luc THIRY, chef de service et Didier GRZEJSZCZAK, ch
 
 Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai été intégré et que je n'ai pas encore cités : Patrice FRANTZ, Julien KEMPF, Fabienne MAMET, François MOLIN, Roderick PIERRE, Stéphane POIROT et Stéphane ROEDEL.
 
-%* Table des matières : mémoire
-
 \part{Mémoire}
 \renewcommand{\clearpage}{}
 \chapter*{Sommaire}
@@ -189,31 +181,81 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
 \renewcommand{\clearpage}{\newpage}
 \clearpage
 
-%* Abstract
-
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-%* Introduction
 
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-%* Présentation de l'entreprise
-
 \chapter{Présentation de l'entreprise}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-%* Sujets traités
+\begin{figure}
+  \begin{center}
+    \begin{minipage}{4cm}
+      \begin{center}
+        \includegraphics[height=2cm]{../res/logo-efluid.jpg}
+        \caption{Efluid}
+      \end{center}
+    \end{minipage}
+    \rule{1cm}{0cm}
+    \begin{minipage}{4cm}
+      \begin{center}
+        \includegraphics[height=2cm]{../res/logo-uem.jpg}
+        \caption{UEM}
+      \end{center}
+    \end{minipage}
+    \rule{1cm}{0cm}
+    \begin{minipage}{4cm}
+      \begin{center}
+        \includegraphics[height=2cm]{../res/logo-enedis.jpg}
+        \caption{Enedis}
+      \end{center}
+    \end{minipage}
+  \end{center}
+\end{figure}
 
 \chapter{Sujets traités}
 
 \section{Généralités}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Environnement de développement}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\begin{figure}
+  \begin{center}
+    \begin{minipage}{4cm}
+      \begin{center}
+        \includegraphics[height=2cm]{../res/java.jpg}
+        \caption{Java}
+      \end{center}
+    \end{minipage}
+    \rule{1cm}{0cm}
+    \begin{minipage}{4cm}
+      \begin{center}
+        \includegraphics[height=2cm]{../res/oracle.png}
+        \caption{Oracle}
+      \end{center}
+    \end{minipage}
+    \rule{1cm}{0cm}
+    \begin{minipage}{4cm}
+      \begin{center}
+        \includegraphics[height=2cm]{../res/intellij.jpg}
+        \caption{Intellij}
+      \end{center}
+    \end{minipage}
+  \end{center}
+\end{figure}
+
+\subsection{Processus de production}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -225,38 +267,75 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-%* Traitement des sujets
-
 \chapter{Traitement du projet industriel}
 
 \section{Analyses préliminaires}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+\subsection{Analyse volumétrique}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Analyse des contextes de demande de publication de la relève}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Formation batch}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Formalisation du périmètre fonctionnel du projet}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\begin{figure}[b]
+  \begin{center}
+    \includegraphics[height=4cm]{../res/linky.jpg}
+    \caption{Compteur \textit{Linky}}
+  \end{center}
+\end{figure}
+
 \section{Formalisation du besoin et planification}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-\section{Conception technique}
+\subsection{Description fonctionnelle du batch}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-\section{Développements fonctionnels}
+\subsection{Découpage technique}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-\section{Tests}
+\section{Conception et implémentation}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-%* Conclusion
+\subsection{Solutions d'intégration du batch}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Architecture générale}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Chargement des objets métiers}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Implémentation des traitements}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Tests}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-%* Table des matières : annexes
 
 \part{Annexes}
 \renewcommand{\clearpage}{}
@@ -266,8 +345,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \thispagestyle{empty}
 \renewcommand{\clearpage}{\newpage}
 \appendix
-
-%* Annexe : Répartition des parts Efluid
 
 \chapter{Efluid : répartition des parts}
 \label{appendix:efluid-parts}
@@ -306,8 +383,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \noindent\textbf{UEM :} Usine d'Electricité de Metz\\
 \noindent\textbf{CDC :} Caisse des Dépôts et Consignations
 
-%* Annexe : Organisation des services Efluid
-
 \chapter{Efluid : organisation des services}
 \label{appendix:efluid-organisation}
 
@@ -345,7 +420,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
   \end{plantuml}
 \end{center}
 
-%* Annexe : Volumétrie
+\chapter{Efluid : logiciel}
+\label{appendix:logiciel}
+
+\begin{center}
+  \includegraphics[height=8cm]{../res/efluid-1.png}
+  \null
+  \vspace{0.3cm}
+  \includegraphics[height=9cm]{../res/efluid-2.png}
+\end{center}
 
 \chapter{Volumétrie}
 \label{appendix:volumetrie}
@@ -425,8 +508,6 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
   \end{itemize}
 \end{itemize}
 
-%* Annexe : Planification
-
 \chapter{Planification}
 \label{appendix:planification}
 
@@ -499,8 +580,6 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
   \end{plantuml}
 \end{center}
 
-%* Annexe : Process
-
 \chapter{Traitement de la demande de publication}
 \label{appendix:process}
 
@@ -538,8 +617,6 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
     \item \underline{LKY06} : Interface de récupération des données \textit{Linky}
   \end{itemize}
 \end{itemize}
-
-%* Annexe : Strategy
 
 \chapter{\textit{Design Pattern}\footnote{Patron de conception} : Stratégie}
 \label{appendix:strategy}
@@ -645,8 +722,6 @@ public class Process {
   }
   \end{lstlisting}
 
-  %* Annexe : Strategy
-
 \chapter{Batch : architecture et implémentation}
 \label{appendix:batch}
 
@@ -733,12 +808,8 @@ public class Process {
   \end{plantuml}
 \end{center}
 
-%* Tables des matières : général
-
 \tableofcontents
 \thispagestyle{empty}
-
-%* Résumé
 
 \chapter*{Résumé}
 \thispagestyle{empty}
