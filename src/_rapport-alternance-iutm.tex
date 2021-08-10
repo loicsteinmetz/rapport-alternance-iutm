@@ -39,8 +39,8 @@
 \mtcsetrules{*}{off}
 
 \begin{document}
-\doparttoc
 \renewcommand \partname{\thispagestyle{empty}}
+\doparttoc
 
 %* Page de garde
 
@@ -169,8 +169,6 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-\textit{Cf. annexe} \ref{appendix:foo}
-
 %* Introduction
 
 \chapter*{Introduction}
@@ -190,7 +188,7 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
 
 %* Traitement des sujets
 
-\chapter{Traitement du projet principal}
+\chapter{Traitement du projet industriel}
 
 \section{Analyses préliminaires}
 \section{Formalisation du besoin et planification}
@@ -216,23 +214,60 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
 
 %* Annexes
 
-\chapter{Foo}
-\label{appendix:foo}
+\chapter{Efluid : répartition des parts}
+\label{appendix:efluid-parts}
 
-{
-  \sffamily{
-    \begin{plantuml}
-      @startuml
-      skinparam monochrome true
-      class Alice {
-        id: string
-      }
-      class Bob
-      Alice -- Bob
-      @enduml 
-    \end{plantuml}
-  }
-}
+\begin{center}
+  \begin{plantuml}
+    @startuml
+    skinparam monochrome true
+    rectangle UEM
+    rectangle CDC
+    rectangle Enedis
+    rectangle Efluid
+    UEM -- Efluid : 60%
+    CDC -- Efluid : 10%
+    Enedis -- Efluid : 30%
+    @enduml
+  \end{plantuml}
+\end{center}
+
+\vspace{1cm}
+\noindent\textbf{UEM :} Usine d'Electricité de Metz\\
+\noindent\textbf{CDC :} Caisse des Dépôts et Consignations
+
+\chapter{Efluid : organisation des services}
+\label{appendix:efluid-organisation}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+    skinparam monochrome true
+    left to right direction
+    rectangle Présidence as P
+    rectangle "Direction informatique" as DI
+    rectangle "Direction commerciale" as DC
+    rectangle Ginko as G
+    rectangle Technologies as T
+    rectangle "Développement : CRM et Facturation" as DFac
+    rectangle "Développement : Comptage et réseaux" as DCpt #BBB
+    rectangle "Expertise fonctionnelle : CRM et Facturation" as EFac
+    rectangle "Expertise fonctionnelle : Comptage et réseaux" as ECpt
+    rectangle "Coordination et clients" as CC
+    rectangle "Prestation et projets" as PP
+    P -- DC
+    P -- DI
+    P -- G
+    DI -- T
+    DI -- DFac
+    DI -- DCpt
+    DC -- EFac
+    DC -- ECpt
+    DC -- CC
+    DC -- PP
+    @enduml
+  \end{plantuml}
+\end{center}
 
 %* Tables des matières : général
 
