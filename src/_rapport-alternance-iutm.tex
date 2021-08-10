@@ -274,20 +274,31 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 \begin{center}
   \begin{plantuml}
-    @startuml
-
-    skinparam monochrome true
-
-    rectangle UEM
-    rectangle CDC
-    rectangle Enedis
-    rectangle Efluid
+    @startmindmap
     
-    UEM -- Efluid : 60%
-    CDC -- Efluid : 10%
-    Enedis -- Efluid : 30%
+    <style>
+      node {
+          LineColor black
+          BackgroundColor #FFF
+          RoundCorner 0
+      }
+      arrow {
+          LineColor #000
+      }
+      grey {
+        BackgroundColor #BBB
+      }
+    </style>
 
-    @enduml
+      * Efluid
+      **_ 60%
+      *** UEM
+      **_ 30%
+      *** Enedis
+      **_ 10%
+      *** CDC
+
+    @endmindmap
   \end{plantuml}
 \end{center}
 
@@ -302,35 +313,35 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 \begin{center}
   \begin{plantuml}
-    @startuml
+    @startmindmap
+    
+    <style>
+      node {
+          LineColor black
+          BackgroundColor #FFF
+          RoundCorner 0
+      }
+      arrow {
+          LineColor #000
+      }
+      grey {
+        BackgroundColor #BBB
+      }
+    </style>
 
-    skinparam monochrome true
-    left to right direction
+      * Direction
+      ** Direction informatique
+      *** Technologies
+      *** Développement : CRM et Facturation
+      *** Développement : Comptage et réseaux <<grey>>
+      ** Direction commerciale
+      *** Expertise fonctionnelle : CRM et Facturation
+      *** Expertise fonctionnelle : Comptage et réseaux
+      *** Coordination et clients
+      *** Prestation et projets
+      ** Ginko
 
-    rectangle Présidence as P
-    rectangle "Direction informatique" as DI
-    rectangle "Direction commerciale" as DC
-    rectangle Ginko as G
-    rectangle Technologies as T
-    rectangle "Développement : CRM et Facturation" as DFac
-    rectangle "Développement : Comptage et réseaux" as DCpt #BBB
-    rectangle "Expertise fonctionnelle : CRM et Facturation" as EFac
-    rectangle "Expertise fonctionnelle : Comptage et réseaux" as ECpt
-    rectangle "Coordination et clients" as CC
-    rectangle "Prestation et projets" as PP
-
-    P -- DC
-    P -- DI
-    P -- G
-    DI -- T
-    DI -- DFac
-    DI -- DCpt
-    DC -- EFac
-    DC -- ECpt
-    DC -- CC
-    DC -- PP
-
-    @enduml
+    @endmindmap
   \end{plantuml}
 \end{center}
 
