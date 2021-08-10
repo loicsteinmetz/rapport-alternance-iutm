@@ -13,6 +13,7 @@
 \usepackage{multicol}
 \usepackage{minitoc}
 \usepackage{plantuml}
+\usepackage{listings}
 
 %* Config
 
@@ -37,6 +38,30 @@
 }
 
 \mtcsetrules{*}{off}
+
+\definecolor{backcolor}{rgb}{0.95,0.95,0.95}
+\definecolor{numbers}{rgb}{0.5,0.5,0.5}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolor},   
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3,
+    framexleftmargin=16pt,
+    framextopmargin=6pt,
+    framexbottommargin=6pt, 
+    frame=tb, 
+    framerule=0pt,
+    numbers=left,
+    numbersep=20pt,
+    numberstyle=\tiny\color{numbers},
+}
+\lstset{style=mystyle}
 
 \begin{document}
 \renewcommand \partname{\thispagestyle{empty}}
@@ -486,6 +511,112 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
     @enduml
   \end{plantuml}
 \end{center}
+
+%* Annexe : Strategy
+
+\chapter{\textit{Design Pattern}\footnote{Patron de conception} : Stratégie}
+\label{appendix:strategy}
+
+\begin{itemize}
+  \item \textbf{Sans stratégie :}\\
+\end{itemize}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    scale 250 height
+
+    class Process {
+      executer() : void
+    }
+    class SousProcess1 {
+      executer1() : void
+    }
+    class SousProcess2 {
+      executer2() : void
+    }
+    class SousProcess3 {
+      executer3() : void
+    }
+
+    Process ..> SousProcess1
+    Process ..> SousProcess2
+    Process ..> SousProcess3
+
+    @enduml
+  \end{plantuml}
+\end{center}
+\vspace{0.5cm}
+
+\begin{lstlisting}
+public class Process {
+
+    public void executer() {
+        if (condition1) {
+          new SousProcess1().exectuer1();
+        } else if (condition2) {
+          new SousProcess2().executer2();
+        } else if (condition3) {
+          new SousProcess3.executer3();
+        }
+    }    
+}
+\end{lstlisting}
+\clearpage
+
+\begin{itemize}
+  \item \textbf{Avec stratégie :}\\
+\end{itemize}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+
+    class Process {
+      -service : Service
+      +executer() : void
+    }
+    interface Service {
+      +executerService() : void
+    }
+    class SousProcess1 {
+      +executerService() : void
+    }
+    class SousProcess2 {
+      +executerService() : void
+    }
+    class SousProcess3 {
+      +executerService() : void
+    }
+
+    Process *-- Service
+    Service <-- SousProcess1
+    Service <-- SousProcess2
+    Service <-- SousProcess3
+
+    @enduml
+  \end{plantuml}
+\end{center}
+\vspace{0.5cm}
+
+\begin{lstlisting}
+  public class Process {
+
+      private Service service;
+
+      public Process(Service service) {
+        this.service = service;
+      }
+  
+      public void executer() {
+          service.executerService();
+      }    
+  }
+  \end{lstlisting}
 
 %* Tables des matières : général
 
