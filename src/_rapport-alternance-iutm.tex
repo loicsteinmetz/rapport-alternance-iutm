@@ -212,7 +212,7 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
 \renewcommand{\clearpage}{\newpage}
 \appendix
 
-%* Annexes
+%* Annexe : Répartition des parts Efluid
 
 \chapter{Efluid : répartition des parts}
 \label{appendix:efluid-parts}
@@ -220,14 +220,18 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
 \begin{center}
   \begin{plantuml}
     @startuml
+
     skinparam monochrome true
+
     rectangle UEM
     rectangle CDC
     rectangle Enedis
     rectangle Efluid
+    
     UEM -- Efluid : 60%
     CDC -- Efluid : 10%
     Enedis -- Efluid : 30%
+
     @enduml
   \end{plantuml}
 \end{center}
@@ -236,14 +240,18 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
 \noindent\textbf{UEM :} Usine d'Electricité de Metz\\
 \noindent\textbf{CDC :} Caisse des Dépôts et Consignations
 
+%* Annexe : Organisation des services Efluid
+
 \chapter{Efluid : organisation des services}
 \label{appendix:efluid-organisation}
 
 \begin{center}
   \begin{plantuml}
     @startuml
+
     skinparam monochrome true
     left to right direction
+
     rectangle Présidence as P
     rectangle "Direction informatique" as DI
     rectangle "Direction commerciale" as DC
@@ -255,6 +263,7 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
     rectangle "Expertise fonctionnelle : Comptage et réseaux" as ECpt
     rectangle "Coordination et clients" as CC
     rectangle "Prestation et projets" as PP
+
     P -- DC
     P -- DI
     P -- G
@@ -265,9 +274,12 @@ Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai é
     DC -- ECpt
     DC -- CC
     DC -- PP
+
     @enduml
   \end{plantuml}
 \end{center}
+
+%* Annexe : Volumétrie
 
 \chapter{Volumétrie}
 \label{appendix:volumetrie}
@@ -346,6 +358,80 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
     \item \approx\space 91\% des demandes de publication de la relève concernent une relève de compteur \textit{Linky}
   \end{itemize}
 \end{itemize}
+
+%* Annexe : Planification
+
+\chapter{Planification}
+\label{appendix:planification}
+
+\begin{itemize}
+  \item \textbf{Planification annuelle :}\\
+\end{itemize}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    scale 1024 width
+    scale 768 height
+
+    printscale monthly zoom 1.4
+    project starts the 2020-09-01
+
+    [Pré-conception] starts 2020-09-01
+    [Pré-conception] ends 2020-12-31
+    [Conception] starts 2020-12-01
+    [Conception] ends 2021-05-31
+    [Développements] starts 2021-03-01
+    [Développements] ends 2021-08-31
+
+    @enduml
+  \end{plantuml}
+\end{center}
+\vspace{1cm}
+
+\begin{itemize}
+  \item \textbf{Planification de l'implémentation :}\\
+\end{itemize}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    scale 1024 width
+    scale 768 height
+
+    printscale weekly
+    project starts the 2021-02-01
+
+    [Formalisation du besoin] starts 2021-02-01
+    [Formalisation du besoin] ends 2021-02-15
+    --
+    [Intégration de la solution] starts 2021-02-08
+    [Intégration de la solution] ends 2021-03-07
+    --
+    [Squelette batch] starts 2021-03-01
+    [Squelette batch] ends 2021-03-15
+    --
+    [Implémentation des chargements] starts 2021-03-16
+    [Implémentation des chargements] ends 2021-05-01
+    --
+    [Implémentation des process] starts 2021-04-16
+    [Implémentation des process] ends 2021-06-01
+    --
+    [Tests] starts 2021-06-01
+    [Tests] ends 2021-07-31
+
+    [Squelette batch]->[Implémentation des chargements]
+    [Implémentation des chargements]->[Tests]
+    [Implémentation des process]->[Tests]
+    [Intégration de la solution]->[Tests]
+
+    @enduml
+  \end{plantuml}
+\end{center}
 
 %* Tables des matières : général
 
