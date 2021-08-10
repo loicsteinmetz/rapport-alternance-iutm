@@ -433,6 +433,60 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
   \end{plantuml}
 \end{center}
 
+%* Annexe : Process
+
+\chapter{Traitement de la demande de publication}
+\label{appendix:process}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    left to right direction
+
+    GestionDemandePublicationReleveProcess <|-- GestionDemandePublicationAvecDonneesProcess
+    GestionDemandePublicationReleveProcess <|-- GestionDemandePublicationEstimationReleveFacturationProcess
+    GestionDemandePublicationReleveProcess <|-- GestionDemandePublicationImportReleveAvecDonneesProcess
+
+    @enduml
+  \end{plantuml}
+\end{center}
+\vspace{0.5cm}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    left to right direction
+    scale 250 width
+
+    circle Traitements
+    rectangle "Saisie TP" as TP
+    rectangle "Auto-relève lors d'une demande de prestation" as AR
+    rectangle "CRI avec saisie relève" as CRI
+    rectangle REL005MT
+    rectangle FAC006MT
+    rectangle FAC020MT
+    rectangle FAC002MT
+    rectangle REL019MT
+    rectangle LKY06 #BBB
+
+    Traitements -- TP
+    Traitements -- AR
+    Traitements -- CRI
+    Traitements -- REL005MT
+    Traitements -- FAC006MT
+    Traitements -- FAC020MT
+    Traitements -- FAC002MT
+    Traitements -- REL019MT
+    Traitements -- LKY06
+
+    @enduml
+  \end{plantuml}
+\end{center}
+
 %* Tables des matières : général
 
 \tableofcontents
