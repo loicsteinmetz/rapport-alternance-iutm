@@ -37,6 +37,8 @@
 
 \mtcsetrules{*}{off}
 
+\onehalfspacing
+
 \definecolor{backcolor}{rgb}{0.95,0.95,0.95}
 \definecolor{numbers}{rgb}{0.5,0.5,0.5}
 \lstdefinestyle{mystyle}{
@@ -66,6 +68,7 @@
 \doparttoc
 
 \thispagestyle{empty}
+\begin{singlespace}
 \begin{center}  
 \begin{multicols}{2}
   \flushleft
@@ -110,12 +113,14 @@
   \includegraphics[width=.6\columnwidth]{../res/logo-efluid.jpg}
 \end{multicols}
 \end{center}
+\end{singlespace}
 
 \clearpage
 \thispagestyle{empty}
 \null
 \clearpage
 
+\begin{singlespace}
 \thispagestyle{empty}
 \begin{center}  
 \begin{multicols}{2}
@@ -161,16 +166,17 @@
   \includegraphics[width=.6\columnwidth]{../res/logo-efluid.jpg}
 \end{multicols}
 \end{center}
+\end{singlespace}
 
 \chapter*{Remerciements}
 \addcontentsline{toc}{chapter}{Remerciements}
 \thispagestyle{empty}
 
-Je remercie tout particulièrement mon maître de stage, Alexandre L'HUILLIER, pour m'avoir fait bénéficier de ses compétences tout au long de mon année d'alternance. Merci à lui pour son professionalisme, sa confiance et sa disponibilité.\\
+Je remercie tout particulièrement mon maître de stage, Alexandre L'Huillier, pour m'avoir fait bénéficier de ses compétences tout au long de mon année d'alternance. Merci à lui pour son professionalisme, sa confiance et sa disponibilité.
 
-Je remercie également Jean-Luc THIRY, chef de service et Didier GRZEJSZCZAK, chef de filière, pour leur accompagnement général et pour ma bonne intégration au sein de l'entreprise.\\
+Je remercie également Jean-Luc Thiry, chef de service et Didier Grzejszczak, chef de filière, pour leur accompagnement général et pour ma bonne intégration au sein de l'entreprise.
 
-Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai été intégré et que je n'ai pas encore cités : Patrice FRANTZ, Julien KEMPF, Fabienne MAMET, François MOLIN, Roderick PIERRE, Stéphane POIROT et Stéphane ROEDEL.
+Mes remerciements vont enfin à l'ensemble des membres du service auquel j'ai été intégré et que je n'ai pas encore cités : Patrice Frantz, Julien Kempf, Fabienne Mamet, François Molin, Roderick Pierre, Stéphane Poirot et Stéphane Roedel.
 
 \part{Mémoire}
 \renewcommand{\clearpage}{}
@@ -189,7 +195,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Ce mémoire a pour objectif de présenter les travaux réalisés dans mon entreprise d'accueil, Efluid, dans le cadre de la licence professionnelle génie logiciel, réalisée en alternance. Cette année fait suite à l'obtention de mon DUT informatique obtenu en un an via une année spéciale.
+
+Ayant déjà réalisé mon stage de fin de DUT chez Efluid, j'ai pu rapidement postuler à l'une des offres d'alternance que proposait le service qui m'avait déjà accueilli. Dans la continuité de mes treize semaines de stage, j'ai donc pu réintégrer ce même service pour mon année d'alternance.\\
+
+C'est donc au sein de la division consommation et sous la tutelle d'Alexandre L'Huillier que j'ai pu travailler sur le projet qui m'a été confié. Je reviendrai plus loin sur la place du service dans l'organisation d'Efluid et sur le détail du projet. On peut néanmoins résumer ainsi la formulation initiale du projet : Il s'agissait de déporter une partie des traitements réalisés en temps réel par le logiciel dans des processus lancés automatiquement et chargés de réaliser ces mêmes traitements de manière asynchrone.
+
+Afin de mieux comprendre les enjeux et les objectifs de ce projet, je commencerai par présenter l'entreprise et son activité. Je détaillerai ensuite la nature des différentes tâches qui m'ont été confiées, ce qui me permettra de décrire le cadre de mes travaux, soit mon environnement de développement et les différents processus de production de l'entreprise. 
+
+Il s'agira donc ensuite de détailler la mise en oeuvre du projet principal qui m'a été confié. J'expliquerai alors les différents aspects techniques et fonctionnels de mes travaux dans l'ordre de leur réalisation. Je présenterai ainsi la méthode générale mise en oeuvre et dont découle justement cet enchaînement. 
+
+Je concluerai enfin en présentant les différents apports de cette année d'alternance dans la perspective plus générale de mon parcours professionnel.
 
 \chapter{Présentation de l'entreprise}
 
@@ -424,7 +440,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \label{appendix:logiciel}
 
 \begin{center}
-  \includegraphics[height=8cm]{../res/efluid-1.png}
+  \includegraphics[height=7.5cm]{../res/efluid-1.png}
   \null
   \vspace{0.3cm}
   \includegraphics[height=9cm]{../res/efluid-2.png}
@@ -630,7 +646,7 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
     @startuml
 
     skinparam monochrome true
-    scale 250 height
+    scale 200 height
 
     class Process {
       executer() : void
