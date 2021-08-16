@@ -412,29 +412,45 @@ L'autre objectif de mon projet consistait à simplifier l'appel de la demande de
 
 J'expliquerai plus loin pourquoi cet objectif a finalement été partiellement abandonné. Il a en effet était jugé préférable de se concentrer d'abord sur le gain de performance potentiel pouvant être réalisé.\\
 
-Le projet tel qu'il m'a été confié était encore en phase d'analyse. En amont des travaux d'implémentation, il a donc donné lieu à une longue phase d'analyse. Une fois cette analyse réalisée, la conception technique de la solution et l'implémentation des nouveaux traitements ont été réalisés en parallèle. Je présenterai donc le traitement de mon projet industriel de manière chronologique.
+Le projet tel qu'il m'a été confié était encore en phase d'analyse. En amont des travaux d'implémentation, il a donc donné lieu à une longue phase d'analyse. Une fois cette analyse réalisée, la conception technique de la solution et l'implémentation des nouveaux traitements ont été réalisés en parallèle (\textit{cf.} annexe \ref{appendix:planification} : Planification annuelle). Je présenterai donc le traitement de mon projet industriel de manière chronologique.
 
 \chapter{Traitement du projet industriel}
 
 \section{Analyses préliminaires}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+La première phase du projet consistait à évaluer les différentes contraintes liées à l'implémentation du \textit{batch} de demande de publication de la relève. Les analyses préliminaires ont notamment permis de dégager la volumétrie des traitements associés à la demande de publication et de décrire les différents contextes d'appels de ces traitements. Elle a par ailleurs conduit à la formalisation d'un planning de travail plus détaillé.
 
 \subsection{Analyse volumétrique}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+L'analyse de la volumétrie de la demande de publication avait pour objectif de dégager l'intérêt de la solution proposée en termes de performances, et d'évaluer sa faisabilité.\\
+
+Cette analyse a nécessité la formalisation de requêtes SQL permettant d'évaluer le nombre de relèves donnant lieu à une demande de publication. Il a ainsi été possible de déterminer l'impact des modifications potentielles en ce qui concerne la quantité de données à traiter : \textit{cf.} annexe \ref{appendix:volumetrie}, analyse volumétrique. Il faut notamment retenir de cette évaluation la grande quantité de données en jeu : les systèmes d'information des différents clients peuvent en effet avoir à gérer plusieurs millions de relèves et de demandes de publication par mois.
+
+L'importance de la quantité de données à traiter a également eut un impact sur l'implémentation et le plan d'intégration du \textit{batch} qu'il s'agissait de mettre en place. Tout comme les opérations gérées au fil de l'eau, les traitements \textit{batch} doivent respecter certains objectifs de performances. Ici, il était par exemple impératif que la demande de publication puisse être gérée dans un temps suffisament court pour que le \textit{batch} gérant la publication proprement dite dispose de toutes les données nécessaires au moment de son exécution.
 
 \subsection{Analyse des contextes de demande de publication de la relève}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+En parallèle de l'analyse volumétrique, il a également été nécessaire de lister et de reproduire les différents contextes applicatifs dans lesquels était appelée la demande de publication : \textit{cf.} annexe \ref{appendix:process}, contextes de la demande de publication.\\
+
+L'identification de ces différents contextes a ainsi permis de mieux cerner les implications potentielles d'une modification des traitements existants. La reproduction des contextes a par ailleurs servi à tester la non-régression de l'implémentation et à identifier la spécificité de chaque traitement. 
+
+Dans le cadre d'un traitement en mode \textit{batch}, il faut en effet noter que l'ensemble des données nécessaire aux processus appelés doit être chargé avant leur exécution. Il était donc important de pouvoir cerner les aspects fonctionnels propres à chaque contexte, de sorte que les traitements asynchrones puissent répliquer les traitements prévus. L'un des principaux critère à prendre en compte a par exemple été la distinction entre les relèves validées via un compte-rendu d'intervention (CRI) ou via d'autres processus. Mais il ne s'agit là que d'un des critères ayant une influence sur la demande de publication.
+
+L'analyse détaillée du processus de demande de publication a également permis de fournir une description de la structure des traitements. La demande de publication est en effet constituée de \textit{process} complexes et se décompose elle-même en différents sous-traitements déterminés en fonction du contexte et reposant sur un système d'héritage. Cette première phase d'analyse a donc permis d'évaluer les contraintes techniques pesant sur l'intégration du \textit{batch}.
 
 \subsection{Formation \textit{batch}}
+
+Au cours de cette première phase de travail, j'ai également bénéficié d'une formation concernant l'implémentation d'un \textit{batch} dans le cadre du \textit{framework} général d'\textit{Efluid}. Il faut en effet noter que le module \textit{Batch} constitue en lui-même un \textit{framework} impliquant des conventions strictes et une architecture spécifique. Il était donc important d'avoir une compréhension générale du système avant de pouvoir concevoir une solution technique pertinente.
+
+La nature asynchrone des traitements \textit{batch} implique elle aussi certaines contraintes. Outre le chargement préalable de l'ensemble des données nécessaires au bon déroulement des traitements, contrainte que j'ai déjà mentionné, la paraléllisation des tâches à laquelle donne lieu ce type de traitement implique une attention toute particulière à la gestion de l'état des données. L'exécution d'un \textit{batch} a en effet lieu sur la base d'un contexte figé, chargé lors de son initialisation. Ce contexte est alors techniquement décorellé du contexte applicatif généré par les opérations des utilisateurs du logiciel. On peut par exemple imaginer dans le cadre du projet en question qu'une relève soit validée et donc chargée par le \textit{batch}, puis qu'elle soit invalidée par un agent pendant l'exécution des traitements asynchrones : Le \textit{batch} n'a alors pas connaissance de la modification du statut de la relève.\\
+
+La formation spécifique au module \textit{batch} dont j'ai pu profiter m'a finalement permis de comprendre l'ensemble des contraintes propres à ce type de traitements. J'ai ainsi pu mieux appréhender leur l'architecture générale, leurs caractéristiques techniques, et certaines de leurs spécificités fonctionnelles.
+
+\section{Formalisation du besoin et planification}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \subsection{Formalisation du périmètre fonctionnel du projet}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \begin{figure}[b]
   \begin{center}
@@ -442,8 +458,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     \caption{Compteur \textit{Linky}}
   \end{center}
 \end{figure}
-
-\section{Formalisation du besoin et planification}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -581,6 +595,78 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \noindent\textbf{UEM :} Usine d'Electricité de Metz.\\
 \noindent\textbf{CDC :} Caisse des Dépôts et Consignations.
 
+\chapter{Planification}
+\label{appendix:planification}
+
+\begin{itemize}
+  \item \textbf{Planification annuelle :}\\
+\end{itemize}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    scale 1024 width
+    scale 768 height
+
+    printscale monthly zoom 1.4
+    project starts the 2020-09-01
+
+    [Pré-conception] starts 2020-09-01
+    [Pré-conception] ends 2020-12-31
+    [Conception] starts 2020-12-01
+    [Conception] ends 2021-05-31
+    [Développements] starts 2021-03-01
+    [Développements] ends 2021-08-31
+
+    @enduml
+  \end{plantuml}
+\end{center}
+\vspace{1cm}
+
+\begin{itemize}
+  \item \textbf{Planification de l'implémentation :}\\
+\end{itemize}
+
+\begin{center}
+  \begin{plantuml}
+    @startuml
+
+    skinparam monochrome true
+    scale 1024 width
+    scale 768 height
+
+    printscale weekly
+    project starts the 2021-02-01
+
+    [Formalisation du besoin] starts 2021-02-01
+    [Formalisation du besoin] ends 2021-02-15
+    --
+    [Intégration de la solution] starts 2021-02-08
+    [Intégration de la solution] ends 2021-03-07
+    --
+    [Squelette batch] starts 2021-03-01
+    [Squelette batch] ends 2021-03-15
+    --
+    [Implémentation des chargements] starts 2021-03-16
+    [Implémentation des chargements] ends 2021-05-01
+    --
+    [Implémentation des process] starts 2021-04-16
+    [Implémentation des process] ends 2021-06-01
+    --
+    [Tests] starts 2021-06-01
+    [Tests] ends 2021-07-31
+
+    [Squelette batch]->[Implémentation des chargements]
+    [Implémentation des chargements]->[Tests]
+    [Implémentation des process]->[Tests]
+    [Intégration de la solution]->[Tests]
+
+    @enduml
+  \end{plantuml}
+\end{center}
+
 \chapter{Volumétrie}
 \label{appendix:volumetrie}
 
@@ -658,78 +744,6 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
     \item \approx\space 91\% des demandes de publication de la relève concernent une relève de compteur \textit{Linky}
   \end{itemize}
 \end{itemize}
-
-\chapter{Planification}
-\label{appendix:planification}
-
-\begin{itemize}
-  \item \textbf{Planification annuelle :}\\
-\end{itemize}
-
-\begin{center}
-  \begin{plantuml}
-    @startuml
-
-    skinparam monochrome true
-    scale 1024 width
-    scale 768 height
-
-    printscale monthly zoom 1.4
-    project starts the 2020-09-01
-
-    [Pré-conception] starts 2020-09-01
-    [Pré-conception] ends 2020-12-31
-    [Conception] starts 2020-12-01
-    [Conception] ends 2021-05-31
-    [Développements] starts 2021-03-01
-    [Développements] ends 2021-08-31
-
-    @enduml
-  \end{plantuml}
-\end{center}
-\vspace{1cm}
-
-\begin{itemize}
-  \item \textbf{Planification de l'implémentation :}\\
-\end{itemize}
-
-\begin{center}
-  \begin{plantuml}
-    @startuml
-
-    skinparam monochrome true
-    scale 1024 width
-    scale 768 height
-
-    printscale weekly
-    project starts the 2021-02-01
-
-    [Formalisation du besoin] starts 2021-02-01
-    [Formalisation du besoin] ends 2021-02-15
-    --
-    [Intégration de la solution] starts 2021-02-08
-    [Intégration de la solution] ends 2021-03-07
-    --
-    [Squelette batch] starts 2021-03-01
-    [Squelette batch] ends 2021-03-15
-    --
-    [Implémentation des chargements] starts 2021-03-16
-    [Implémentation des chargements] ends 2021-05-01
-    --
-    [Implémentation des process] starts 2021-04-16
-    [Implémentation des process] ends 2021-06-01
-    --
-    [Tests] starts 2021-06-01
-    [Tests] ends 2021-07-31
-
-    [Squelette batch]->[Implémentation des chargements]
-    [Implémentation des chargements]->[Tests]
-    [Implémentation des process]->[Tests]
-    [Intégration de la solution]->[Tests]
-
-    @enduml
-  \end{plantuml}
-\end{center}
 
 \chapter{Traitement de la demande de publication}
 \label{appendix:process}
@@ -965,6 +979,6 @@ public class Process {
 \chapter*{Résumé}
 \thispagestyle{empty}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
 
 \end{document}
