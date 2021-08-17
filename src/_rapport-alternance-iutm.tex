@@ -1018,8 +1018,12 @@ public class Process {
   \end{plantuml}
 \end{center}
 
-\tableofcontents
-\thispagestyle{empty}
+\clearpage
+\pagestyle{empty}
+{
+  \renewcommand{\thispagestyle}[1]{}
+  \tableofcontents
+}
 
 \chapter*{Résumé}
 \thispagestyle{empty}
