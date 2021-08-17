@@ -448,26 +448,71 @@ La formation spécifique au module \textit{batch} dont j'ai pu profiter m'a fina
 
 \section{Formalisation du besoin et planification}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+On peut finalement résumer le besoin initial auquel répond le projet par ces deux objectifs :
+
+\begin{itemize}
+  \item Réduire les temps de chargement lors de l'utilisation du logiciel
+  \item Implémenter un point d'accès unique à la demande de publication de la relève pour l'ensemble des processus de l'application
+\end{itemize}
 
 \subsection{Formalisation du périmètre fonctionnel du projet}
 
-\begin{figure}[b]
-  \begin{center}
-    \includegraphics[height=4cm]{../res/linky.jpg}
-    \caption{Compteur \textit{Linky}}
-  \end{center}
-\end{figure}
+Conformément aux processus de production mis en place par l'entreprise, ce projet a d'abord donné lieu à une présentation et une discussion avec les services d'analyse. Deux contraintes principales ont alors été mises en évidence :\\
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\begin{itemize}
+  \item Contrainte de performance : le \textit{batch} devra être exécuté plusieurs fois par jour et ses temps de traitements doivent permettre de gérer ensuite la publication proprement dite.
+  \item Contrainte client : \textit{Enedis}, le principal client d'\textit{Efluid}, souhaite conserver le plus de traitements synchrones possible, ce qui va à l'encontre du projet.
+\end{itemize}
+\vspace{0.5cm}
+
+Avec l'accord des services d'analyse, et compte tenu de ces contraintes, il a finalement été décidé de réduire le périmètre d'application du projet. En effet, afin de répondre à la contrainte d'acceptabilité du projet posée notamment par \textit{Enedis}, l'objectif de migrer l'ensemble des appels de la demande de publication a finalement été réduit. Le projet a ainsi consisté à ne migrer que la demande de publication réalisée au moment de l'import des relèves des compteurs communiquants, ou compteurs \textit{Linky} (\textit{cf.} figure \ref{linky}). Cet import est réalisé via le module d'interface "LKY06" ; la mention ultérieure de ce module renverra donc à l'ensemble du process d'import des relèves \textit{Linky}.
+
+Malgré la réduction du périmètre fonctionnel, il a néanmoins été convenu que cette solution, si elle finissait par être retenu par le client, devait garantir une migration facile d'autre processus. Bien que les objectifs initiaux du projet aient été réduits, il a donc fallu tenir compte de la potentielle migration d'autres traitements vers la solution à développer en proposant une implémentation qui puisse être modulable.
 
 \subsection{Description fonctionnelle du \textit{batch}}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[height=4cm]{../res/linky.jpg}
+    \caption{Compteur \textit{Linky}}
+    \label{linky}
+  \end{center}
+\end{figure}
+
+La demande de publication de la relève était initialement gérée au fil de l'eau via différents processus, dont la validation et l'invalidation de la relève. Le \textit{batch}, exécuté régulièrement en journée, devait permettre quant à lui de gérer la demande de publication de façon différée. 
+
+Les traitements réalisés par le \textit{batch} devaient être basés sur les processus de demande de publication existants. Dans le cas d'une demande de publication gérée par \textit{batch}, les modalités devaient donc être identiques à celles d'une demande de publication synchrone telle qu'elle était gérée avant la nouvelle implémentation. Dans ce cas, le processus appelant devait donc se contenter de marquer les relèves concernées afin que le \textit{batch} puisse ensuite les ramasser est réaliser les traitements prévus.
+
+Le traitement différé de la demande de publication impliquait en outre la gestion de problèmes de concurrence. Les échanges associés à la relève devaient en effet garder un état cohérent par rapport aux opérations réalisées via l'interface du logiciel et ce malgré la gestion asynchrone de la demande de publication.\\
+
+La mise en place de la sélection des relèves, permettant de déporter une partie des demandes de publication vers le \textit{batch}, devait donc prendre en compte deux contraintes majeures :
+
+\clearpage
+
+\begin{itemize}
+  \item \textbf{Contraintes de modularité : }
+  \begin{itemize}
+    \item Les développements visaient à pouvoir sélectionner les relèves enregistrées par l'interface LKY06, dont la demande de publication devait être gérée de façon asynchrone, mais sans altérer les processus exécutés de manière synchrone dans les autres contextes.
+    \item L'intégration devait cependant permettre la migration ultérieure d'autres processus de la demande de publication synchrone vers la demande de publication asynchrone. 
+  \end{itemize}
+  \vspace{0.5cm}
+  \item \textbf{Contrainte d'intégrité :} Afin de garantir la cohérence des opérations réalisées sur les relèves concernées par la sélection, le marquage devait être réalisé lors de la validation des relèves mais aussi lors de leur invalidation. En effet, dans le cas de la validation d'une relève avec gestion asynchrone de la demande de publication, il fallait pouvoir gérer sa potentielle invalidation alors même que la demande de publication n'a pas encore été réalisée. Il fallait également pouvoir gérer les problèmes de concurrence qu'impliquent les traitments asynchrones : si la demande de publication d'une relève est en cours de traitement, il devait être possible d'opérer un retour sur l'opération si dans le même temps la relève était invalidée.
+\end{itemize}
 
 \subsection{Découpage technique}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Avant d'aborder les travaux de conception et d'implémentation, j'ai pu procéder à un découpage technique du projet. En prenant exemple sur des implémentations de \textit{batchs} antérieures, j'ai donc pu diviser l'ensemble des travaux en différentes étapes, impliquant pour chacune d'entre elles une phase de conception et une phase de développement. Les différents travaux de conception ont ainsi du être formalisés dans un document technique, tandis que les développement ont donné lieu à une revue régulière de la part de mon maître de stage ainsi que d'autres membres de mon service.
+
+Cette division technique a permis la formalisation d'un planning prévisionnel, basé sur une estimation du temps de travail nécessaire à la réalisation de chaque étape : \textit{cf.} annexe \ref{appendix:planification} : Planification de l'implémentation. Six étapes ont donc été distinguées, dont la formalisation du besoin qui avait déjà été réalisée. Il s'agira donc à présent d'approfondir chacun de ces travaux :\\
+
+\begin{enumerate}
+  \item Formalisation du besoin
+  \item Conception et développement de l'intégration des nouveaux traitements aux processus existants
+  \item Implémentation du squelette du \textit{batch} suivant l'architecture du module dédié
+  \item Description et implémentation des chargements nécessaires au bon déroulement du processus asynchrones
+  \item Description et implémentation des traitements \textit{batch}
+  \item Tests : tests de performance et tests d'intégration\footnote{A noter que des tests unitaires ont également été implémentés en parallèle de chaque phase de développement.}
+\end{enumerate}
 
 \section{Conception et implémentation}
 
@@ -672,7 +717,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 \textit{Volumes estimés le 20/01/2021 à partir des copies anonymisées des bases de données de production.}\\
 
-Les données suivantes permettent d’évaluer le nombre de relèves concernées par le processus de demande de publication quel que soit leur contexte de création.\\
+Les données suivantes permettent d'évaluer le nombre de relèves concernées par le processus de demande de publication quel que soit leur contexte de création.\\
 
 \begin{itemize}
   \item \textbf{UEM}
@@ -708,7 +753,7 @@ Les données suivantes permettent d’évaluer le nombre de relèves concernées
 \end{itemize}
 \clearpage
 
-Les données suivantes permettent d’évaluer le nombre de relèves concernées par le processus de demande de publication en ne considérant que les relèves réalisées via un compteur \textit{\textit{Linky}}.\\
+Les données suivantes permettent d'évaluer le nombre de relèves concernées par le processus de demande de publication en ne considérant que les relèves réalisées via un compteur \textit{\textit{Linky}}.\\
 
 \begin{itemize}
   \item \textbf{Enedis IDF}
