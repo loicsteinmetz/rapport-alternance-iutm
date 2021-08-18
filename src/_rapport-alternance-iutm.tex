@@ -578,7 +578,21 @@ L'implémentation du batch de demande de publication a donc donné lieu à la cr
   \end{center}
 \end{figure}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Le \textit{batch} devant chargé tous les objets métiers mobilisés en amont des traitements, il a d'abord été nécessaire de lister l'ensemble des données nécessaires au bon déroulement du processus. Un travail d'analyse a donc permis de déterminer l'ensemble des informations impliquées dans la demande de publication de la relève, dans le contexte particulier de l'interface LKY06. Compte-tenu de la complexité des traitements, les chargements ont néanmoins du être complétés durant le développement, suite à des anomalies rencontrées lors du test de certains contextes.
+
+Les chargements sont implémentés au niveau des classes DAO et concernent deux types d'objets et de données :\\
+
+\begin{itemize}
+  \item \textbf{Les données de paramétrage} : Chargées au niveau du processus principal (\textit{Program}), ces données statiques sont partagées par les différents traitements parallèles (\textit{Jobs}). Parmi ces données, on peut par exemple citer les différents critères de publication pouvant être mobilisés afin de déterminer si la relève nécessite une publication ou non, ou encore les différents gestionnaires de concession pouvant être paramétrés comme destinataires ds publications créées.
+  \item \textbf{Les données opérationnelles} : Ces données sont chargées dans les traitements parallèles et sont donc propres à chaque relève traitée. Les traitements parallèles commencent donc par charger ces données par lot avant de procéder à la demande de publication. Ces données sont constituées par l'ensemble des informations portant sur une relève permettant de déterminer s'il y a lieu de la publier et sur les informations permettant d'initialiser, le cas échéant, la publication des mesures.
+\end{itemize}
+\vspace{0.5cm}
+
+L'ensemble de ces opérations de chargement est réalisé via l'implémentation de requêtes SQL préparées dans les classes dédiées. La formalisation de ces requêtes a nécessité d'analyser les différentes associations entre les entités concernées au niveau de la base de données, et de définir des conditions pertinentes quant à la sélection des données.
+
+Compte tenu de la complexité de certaines associations, la performance de certaines requêtes a également du être analysée et a donné lieu à des modifications en cours de développement. Il faut en effet noter que dans le cadre d'un processus \textit{batch}, la dimension massive des traitements peut impliquer des ralentissements importants lors de la mauvaise optimisation de certaines opérations.\\
+
+Une fois les chargements implémentés, il a donc été possible de passer à l'implémentation du processus de demande de publication proprement dit. Comme indiqué plus haut, il aura néanmoins été nécessaires de revenir plusieurs fois sur les différents chargements au cours du développement afin de corriger les anomalies rencontrées.
 
 \subsection{Implémentation des traitements}
 
