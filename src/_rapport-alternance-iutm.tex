@@ -533,13 +533,13 @@ Pour les deux solutions, l’implémentation proposée a reposé sur l’utilisa
 
 Afin de choisir la meilleure des deux solutions, il a donc été nécessaire de formaliser leurs avantages et leurs inconvénients, d'un point de vue technique et fonctionnel.
 
-La solution n°1 présentait ainsi l'avantage d'avoir de bonnes performances et de nécessiter peu de paramétrage, du fait de sa simplicité. Elle est en revanche difficile à adapter en cas de complexification du processus de demande de publication et ne permet pas de gérer finement les erreurs éventuelles au cours des traitements, ceux-ci étant tous réalisés d'un bloc.
+La solution 1 présentait ainsi l'avantage d'avoir de bonnes performances et de nécessiter peu de paramétrage, du fait de sa simplicité. Elle est en revanche difficile à adapter en cas de complexification du processus de demande de publication et ne permet pas de gérer finement les erreurs éventuelles au cours des traitements, ceux-ci étant tous réalisés d'un bloc.
 
-La solution n°2 présentait quant à elle l'avantage de permettre un suivi des processus en cours, intégrant la revue des anomalies potentielles par un agent. Elle permettait en outre d'adapter facilement les processus appelés en cas de changement fonctionnel de la demande de publication : ajout possible de nouvelles étapes au processus, de nouveaux traitements, et/ou d'un système de gestion des anomalies. Cette seconde solution présentait néanmoins l'inconvénient de nécessiter un projet d'intégration complexe : injection de scripts, paramétrage, gestion d'habilitations. Elle présentait également des performances réduites et aurait nécessité une exploitation continue de la part des clients avec un paramétrage spécifique pour chacun d'entre eux.
+La solution 2 présentait quant à elle l'avantage de permettre un suivi des processus en cours, intégrant la revue des anomalies potentielles par un agent. Elle permettait en outre d'adapter facilement les processus appelés en cas de changement fonctionnel de la demande de publication : ajout possible de nouvelles étapes au processus, de nouveaux traitements, et/ou d'un système de gestion des anomalies. Cette seconde solution présentait néanmoins l'inconvénient de nécessiter un projet d'intégration complexe : injection de scripts, paramétrage, gestion d'habilitations. Elle présentait également des performances réduites et aurait nécessité une exploitation continue de la part des clients avec un paramétrage spécifique pour chacun d'entre eux.
 
-Compte-tenu du besoin spécifique lié ici à la demande de publication, la première solution a pu être retenue. Ce processus ne nécessite pas en effet de pouvoir gérer des anomalies en cours de traitement, ni de pouvoir être suivi via des vues dédiées. La demande de publication n'est en outre que très peu susceptible d'évoluer et de se complexifier a court ou moyen terme. En dépit des apports fonctionnels de la solution n°2, ces derniers ne suffisaient donc pas à justifier son adoption. La solution présentait en effet un coût plus important que ce soit au niveau de son implémentation, de ses performances, ou de son exploitation en production, pour un intérêt fonctionnel finalement très réduit. 
+Compte-tenu du besoin spécifique lié ici à la demande de publication, la première solution a pu être retenue. Ce processus ne nécessite pas en effet de pouvoir gérer des anomalies en cours de traitement, ni de pouvoir être suivi via des vues dédiées. La demande de publication n'est en outre que très peu susceptible d'évoluer et de se complexifier a court ou moyen terme. En dépit des apports fonctionnels de la solution 2, ces derniers ne suffisaient donc pas à justifier son adoption. La solution présentait en effet un coût plus important que ce soit au niveau de son implémentation, de ses performances, ou de son exploitation en production, pour un intérêt fonctionnel finalement très réduit. 
 
-La solution retenue a donc été la solution n°1, moins complexe, et répondant davantage au besoin direct, notamment en ce qui concerne le besoin de performance qu’implique la volumétrie des traitements.
+La solution retenue a donc été la solution 1, moins complexe, et répondant davantage au besoin direct, notamment en ce qui concerne le besoin de performance qu’implique la volumétrie des traitements.
 
 \subsection{Architecture générale}
 
@@ -596,7 +596,32 @@ Une fois les chargements implémentés, il a donc été possible de passer à l'
 
 \subsection{Implémentation des traitements}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Le demande de publication, réalisée de manière asynchrone, est constituées des opérations suivantes :
+
+\begin{enumerate}
+  \item Chargement des données de paramétrage.
+  \item Récupération des relèves marquées au préalables et devant être traitées.
+  \item Purge des données récupérées : élimination des traitements redondants portant sur une même relève.
+  \item Evaluation de la nécessité de publier la relève.
+  \item Création, le cas échéant, d'une publication. Pour rappel, la transmission des publications à leur destinataire est réalisée par un autre \textit{batch} dédié à cette opération.
+  \item Purge de la table temporaire dans laquelle ont été insérées les données contextuelle nécessaires aux traitements.
+\end{enumerate}
+\vspace{0.5cm}
+
+Ici, les opérations 1 à 3 et l'opération 6 sont implémentées au niveau du \textit{Program} : elles constituent les opérations d'initialisation et de finalisation du \textit{batch}. Les opérations 4 et 5 sont quant à elles parallélisées et donc réalisée au niveau du \textit{Job}.
+
+La demande de publication proprement dite consiste en l'appel des traitements existants, d'ores et déjà appelés pour la demande de publication synchrone. Ces derniers ont néanmoins du être adaptés pour répondre à ce nouveau contexte, et ont été complétés par certains traitements propres au \textit{framework batch} :\\
+
+\begin{itemize}
+  \item Processus de lancement du batch.
+  \item Enregistrement et affichage de données statistiques.
+  \item Enregistrement par lot des données créées.
+\end{itemize}
+\vspace{0.5cm}
+
+La principale adaptation des traitements existants a consisté à prévenir certains chargements de données réalisés initialement au fil de l'eau. Le \textit{batch} procédant en effet à une phase de chargement initiale, ces chargements ponctuels au sein des traitements sont interdits par le \textit{framework}. Ces adaptations ont encore une fois été mise en place notamment via le \textit{pattern Strategy}.
+
+L'ensemble des traitements a pu être testé manuellement au cours du développement, sur la base de contextes simulés. Conformément aux conventions du \textit{framework}, certains process ont également donné lieu à l'implémentation de tests unitaires. La dernière phase du projet consistait donc en l'implémentation de tests d'intégrations, chargés de tester l'exécution globale du \textit{batch}, et en la réalisation de tests de performances.
 
 \subsection{Tests}
 
