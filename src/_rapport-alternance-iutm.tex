@@ -14,6 +14,9 @@
 \usepackage{minitoc}
 \usepackage{plantuml}
 \usepackage{listings}
+\usepackage{array}
+\usepackage{pict2e}
+\usepackage{slashbox}
 
 \titleformat{\chapter}[display]{}{}{0pt} {
   \parbox{\textwidth} {
@@ -209,7 +212,7 @@ Je concluerai enfin en présentant les différents apports de cette année d'alt
 
 \chapter{Présentation de l'entreprise}
 
-\begin{figure}[b]
+\begin{figure}[t]
   \begin{center}
     \begin{minipage}{4cm}
       \begin{center}
@@ -243,7 +246,7 @@ Je concluerai enfin en présentant les différents apports de cette année d'alt
 
 Cette dimension modulaire de l'application donne lieu à une division fonctionnelle des services de développement de la société, c'est-à-dire à un regrouppement des activités de développement non pas selon un critère technique (suivant par exemple l'opposition \textit{front-end}/\textit{back-end}), mais d'après les solutions apportées dans les domaines concrets de l'activité des clients (\textit{cf.} Annexe \ref{appendix:efluid-organisation} : L'organisation des services d'\textit{Efluid}). J'ai donc pour ma part été intégré à la division "consommation", qui appartient elle-même au service "comptage et réseaux". 
 
-Outre les services de développements fonctionnels dans lesquels sont intégrés la majorité des développeurs, il existe également une filière technique dont les services sont chargés de missions transverses, comme par exemple le déploiement de l'application ou le développement des composants élémentaires du programme. C'est une partie du processus de production que j'ai moins été en mesure d'aborder au cours de mon année d'alternance, mais avec laquelle j'ai néanmoins été en contact, puisque ces services sont chargés notamment de la gestion des environnements de développement et de la maintenance des infrastructures de \textit{versionning} nécessaires aux développeurs fonctionnels.\\
+Outre les services de développements fonctionnels dans lesquels sont intégrés la majorité des développeurs, il existe également des services chargés de missions transverses, comme par exemple le déploiement de l'application ou le développement des composants élémentaires du programme. C'est une partie du processus de production que j'ai moins été en mesure d'aborder au cours de mon année d'alternance, mais avec laquelle j'ai néanmoins été en contact, puisque certains de ces services sont aussi chargés de la gestion des environnements de développement et de la maintenance des infrastructures de \textit{versionning}.\\
 
 \textit{Efluid} a été développé à l'initiative de l'UEM (\textit{cf.} figure \ref{uem}), en partenariat avec \textit{Enedis} (\textit{cf.} figure \ref{enedis}), qui émane d'EDF (\textit{cf.} Annexe \ref{appendix:efluid-gouvernance} : La gouvernance d'\textit{Efluid}) et profite donc de l'expertise de ces groupes afin de répondre au mieux aux besoins du secteur de l'énergie. La société est devenu un acteur important dans gestion des systèmes d'information de ce secteur et emploie aujourd'hui plus de deux-cent salariés. \textit{Efluid} compte \textit{Enedis} parmi ses clients mais aussi un grand nombre de régies locales dont par exemple l'\textit{Electricité de Strasbourg}. L'entreprise répond également a des appels d'offre à l'étranger et pourrait donc à terme prendre une dimension internationale.
 
@@ -518,7 +521,7 @@ Cette division technique a permis la formalisation d'un planning prévisionnel, 
 
 \subsection{Solutions d'intégration du \textit{batch}}
 
-Les solutions proposées devaient permettre l’enregistrement des relèves à publier d'une part et des éléments de contexte nécessaires aux traitements du \textit{batch} d'autre part. C'est en effet en récupérant ces différents éléments que les traitements asynchrones peuvent ensuite être réalisé. Deux solutions ont alors été identifiées :\\
+Les solutions proposées devaient permettre l’enregistrement des relèves à publier d'une part et des éléments de contexte nécessaires aux traitements du \textit{batch} d'autre part. C'est en effet en récupérant ces différents éléments que les traitements asynchrones peuvent ensuite être réalisés. Deux solutions ont alors été identifiées :\\
 
 \begin{enumerate}
   \item L'enregistrement de l'ensemble des informations dans un objet contextuel dédié enregistré en base de données, suivi d'un traitement \textit{batch} classique.
@@ -540,9 +543,40 @@ La solution retenue a donc été la solution n°1, moins complexe, et répondant
 
 \subsection{Architecture générale}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Les premiers développements consacrés au \textit{batch} proprement dit ont consisté à implémenter son squelette sur la base de l'architecture prévue par le framework : \textit{cf.} annexe \ref{appendix:batch} : architecture batch.\\
+
+L'architecture \textit{batch} d'\textit{Efluid} peut être décomposée de deux manière, selon une division technique d'une part, et une division fonctionnelle d'autre part (\textit{cf.} figure \ref{division}).
+
+D'un point de vue technique on peut en effet distinguer les classes de traitement\footnote{Classes héritant ici de \textit{ProgramBatch} et \textit{AbstractAppBatchJob}. \textit{Cf.} annexe \ref{appendix:batch}.} des DAO\footnote{\textit{Data Access Object}.}, les classes de gestion des données\footnote{Classes héritant ici de \textit{ProgramBatchDAO} et \textit{BatchJobDAO}. \textit{Cf.} annexe \ref{appendix:batch}.}. Les premières sont chargées de l'implémentation des processus métiers, à savoir ici de la réalisation de la demande de publication, tandis que les secondes sont chargées de réaliser les opérations en base de données sur la base de requêtes SQL : sélections, mise à jour, création et suppression de données.
+
+D'un point de vue fonctionnel, on peut diviser ces mêmes classes en séparant celles liées au \textit{program} du \textit{batch}\footnote{Classes héritant ici de \textit{ProgramBatch} et \textit{ProgramBatchDAO}. \textit{Cf.} annexe \ref{appendix:batch}.}, et celles liées au \textit{job}\footnote{Classes héritant ici de \textit{AbstractAppBatchJob} et \textit{BatchJobDAO}. \textit{Cf.} annexe \ref{appendix:batch}.}. La partie \textit{program} du \textit{batch} permet de gérer les traitement d'initialisation et de finalisation du batch via le \textit{thread} d'exécution de processus. La partie \textit{job} consiste quant à elle à implémenter les traitements pouvant être parallélisés et qui seront donc exécutés sur différents \textit{threads} autonomes.\\
+
+L'implémentation du batch de demande de publication a donc donné lieu à la création de quatre classes principales, dépendant en outre de classes annexes assurant principalement la gestion des erreurs, des statistiques et de constantes diverses :\\
+
+\begin{itemize}
+  \item \textit{DemandePublicationReleveProgram}
+  \item \textit{DemandePublicationReleveProgramDAO}
+  \item \textit{DemandePublicationReleveJob}
+  \item \textit{DemandePublicationReleveJobDAO}
+\end{itemize}
 
 \subsection{Chargement des objets métiers}
+
+\begin{figure}[t]
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \cline{2-3}
+      \multicolumn{1}{ c| }{} & \textbf{Traitement principal} & \textbf{Traitements parallèles} \\
+      \cline{1-3}
+      \textbf{Process métiers} & \textit{Program} & \textit{Job} \\ 
+      \hline
+      \textbf{Gestion des données} & \textit{ProgramDAO} & \textit{JobDAO} \\
+      \hline
+    \end{tabular}
+    \caption{Traitements \textit{batch}}
+    \label{division}
+  \end{center}
+\end{figure}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -995,40 +1029,42 @@ Avec le respect du \textit{pattern}, un nouveau sous-process peut être injecté
     skinparam monochrome true
     scale 250 height
 
-    class DemandePublicationRekeveProgramDAO
+    class DemandePublicationRekeveProgramDAO #BBB
     class ERequeteDemandePublicationReleveBatchDAO
-    class DemandePublicationReleveJobDAO
+    class DemandePublicationReleveJobDAO #BBB
 
-    DemandePublicationRekeveProgramDAO .d.> ERequeteDemandePublicationReleveBatchDAO
-    DemandePublicationReleveJobDAO .u.> ERequeteDemandePublicationReleveBatchDAO
+    DemandePublicationRekeveProgramDAO ..> ERequeteDemandePublicationReleveBatchDAO
+    DemandePublicationReleveJobDAO ..> ERequeteDemandePublicationReleveBatchDAO
 
     @enduml
   \end{plantuml}
-\end{center}
-\begin{center}
+
+  \vspace{0.5cm}
+
   \begin{plantuml}
     @startuml
 
     skinparam monochrome true
     scale 150 height
 
-    class DemandePublicationReleveProgram
+    class DemandePublicationReleveProgram #BBB
     class DemandePublicationReleveBatchConstantes
 
-    DemandePublicationReleveProgram .d.> DemandePublicationReleveBatchConstantes
+    DemandePublicationReleveProgram ..> DemandePublicationReleveBatchConstantes
 
     @enduml
   \end{plantuml}
-\end{center}
-\begin{center}
+
+  \vspace{1cm}
+
   \begin{plantuml}
     @startuml
 
     skinparam monochrome true
     left to right direction
 
-    class DemandePublicationReleveJob
-    class GestionDemandePublicationReleveProcess #BBB
+    class DemandePublicationReleveJob #BBB
+    class GestionDemandePublicationReleveProcess
     class ECountDemandePublicationReleveType
     class DemandePublicationReleveBatchDAOExceptions
 
