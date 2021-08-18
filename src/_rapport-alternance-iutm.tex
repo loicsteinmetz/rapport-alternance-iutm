@@ -627,11 +627,45 @@ L'ensemble des traitements a pu être testé manuellement au cours du développe
 
 Suite à l'implémentation du \textit{batch}, certains contextes potentiellement problématiques ont d'abord été testés manuellement. 
 
-Ces tests ayant été concluant, il a ensuite été nécessaire de vérifier les bonnes performances de l'ensemble des traitements mis en place. Suite à la mise en place d'un contexte dédié, il a donc été possible d'estimer le temps d'exécution moyen du \textit{batch} ainsi que le temps de traitement par relève, en reproduisant le plus fidèlement possible les condition d'exécution du \textit{batch} sur les serveurs de production. Ces mesures ont également été concluantes.
+Ces tests ayant été concluant, il a ensuite été nécessaire de vérifier les bonnes performances de l'ensemble des traitements mis en place. Suite à la mise en place d'un contexte dédié, il a donc été possible d'estimer le temps d'exécution moyen du \textit{batch} ainsi que le temps de traitement par relève, en reproduisant le plus fidèlement possible les condition d'exécution du \textit{batch} sur les serveurs de production (\textit{cf.} figure \ref{logs}). Ces mesures ont également été concluantes.
 
 La dernière étape du projet consistait donc enfin en l'implémentation de tests d'intégration chargés de vérifier l'exécution du batch dans son ensemble. La rédaction de ces tests s'est avéré être particulièrement compliquée, compte-tenu de la complexité des contexte à mettre en place. En effet, la nature même de ces tests implique la création de contextes entiers devant être valides et pertinent d'un point de vue fonctionnel. La mise en place de ces contextes requiert donc une bonne compréhension fonctionnelle du logiciel dans son ensemble, et une bonne maîtrise de la structure générale de l'application.\\
 
+\begin{center}
+\noindent*\\
+\end{center}
+
 La validation de ces tests a finalement permis de clore le projet. Ces travaux pourront donc a présent donner lieu à de nouvelles analyses avant de valider ou non la mise en production de la solution développée, sur la base également d'un dialogue avec les différents clients.
+
+\begin{figure}[t]
+  \begin{center}
+    \begin{lstlisting}
+*******************************************************************
+LOG D'EXECUTION
+D:\java\logBatch\CNS010MT\CNS010MT-20210721-163042.log
+2021-07-21 16:30:42:600
+CNS010MT - Demande de publication de la relève
+*******************************************************************
+
+[...]
+
+Statistiques d'exécution
+  nombre d'éléments : 513
+  nombre d'éléments en erreur : 0
+  nombre d'échanges créés suite aux demandes de publication : 501
+
+[...]
+
+TEMPS D'EXECUTION : 0h 0' 21" 773ms
+
+CODE RETOUR : 0
+
+*******************************************************************
+      \end{lstlisting}
+    \caption{Extraits de logs : statistiques générales}
+    \label{logs}
+  \end{center}
+\end{figure}
 
 \chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
