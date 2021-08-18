@@ -625,7 +625,13 @@ L'ensemble des traitements a pu être testé manuellement au cours du développe
 
 \subsection{Tests}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Suite à l'implémentation du \textit{batch}, certains contextes potentiellement problématiques ont d'abord été testés manuellement. 
+
+Ces tests ayant été concluant, il a ensuite été nécessaire de vérifier les bonnes performances de l'ensemble des traitements mis en place. Suite à la mise en place d'un contexte dédié, il a donc été possible d'estimer le temps d'exécution moyen du \textit{batch} ainsi que le temps de traitement par relève, en reproduisant le plus fidèlement possible les condition d'exécution du \textit{batch} sur les serveurs de production. Ces mesures ont également été concluantes.
+
+La dernière étape du projet consistait donc enfin en l'implémentation de tests d'intégration chargés de vérifier l'exécution du batch dans son ensemble. La rédaction de ces tests s'est avéré être particulièrement compliquée, compte-tenu de la complexité des contexte à mettre en place. En effet, la nature même de ces tests implique la création de contextes entiers devant être valides et pertinent d'un point de vue fonctionnel. La mise en place de ces contextes requiert donc une bonne compréhension fonctionnelle du logiciel dans son ensemble, et une bonne maîtrise de la structure générale de l'application.\\
+
+La validation de ces tests a finalement permis de clore le projet. Ces travaux pourront donc a présent donner lieu à de nouvelles analyses avant de valider ou non la mise en production de la solution développée, sur la base également d'un dialogue avec les différents clients.
 
 \chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
