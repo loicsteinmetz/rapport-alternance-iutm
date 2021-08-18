@@ -412,7 +412,7 @@ L'autre objectif de mon projet consistait à simplifier l'appel de la demande de
 
 J'expliquerai plus loin pourquoi cet objectif a finalement été partiellement abandonné. Il a en effet était jugé préférable de se concentrer d'abord sur le gain de performance potentiel pouvant être réalisé.\\
 
-Le projet tel qu'il m'a été confié était encore en phase d'analyse. En amont des travaux d'implémentation, il a donc donné lieu à une longue phase d'analyse. Une fois cette analyse réalisée, la conception technique de la solution et l'implémentation des nouveaux traitements ont été réalisés en parallèle (\textit{cf.} annexe \ref{appendix:planification} : Planification annuelle). Je présenterai donc le traitement de mon projet industriel de manière chronologique.
+Le projet tel qu'il m'a été confié était encore en phase d'analyse. En amont des travaux d'implémentation, il a donc donné lieu à une longue phase d'analyse. Une fois cette analyse réalisée, la conception technique de la solution et l'implémentation des nouveaux traitements ont été réalisés en parallèle (\textit{cf.} annexe \ref{appendix:planification} : Planification générale). Je présenterai donc le traitement de mon projet industriel de manière chronologique.
 
 \chapter{Traitement du projet industriel}
 
@@ -503,7 +503,7 @@ La mise en place de la sélection des relèves, permettant de déporter une part
 
 Avant d'aborder les travaux de conception et d'implémentation, j'ai pu procéder à un découpage technique du projet. En prenant exemple sur des implémentations de \textit{batchs} antérieures, j'ai donc pu diviser l'ensemble des travaux en différentes étapes, impliquant pour chacune d'entre elles une phase de conception et une phase de développement. Les différents travaux de conception ont ainsi du être formalisés dans un document technique, tandis que les développement ont donné lieu à une revue régulière de la part de mon maître de stage ainsi que d'autres membres de mon service.
 
-Cette division technique a permis la formalisation d'un planning prévisionnel, basé sur une estimation du temps de travail nécessaire à la réalisation de chaque étape : \textit{cf.} annexe \ref{appendix:planification} : Planification de l'implémentation. Six étapes ont donc été distinguées, dont la formalisation du besoin qui avait déjà été réalisée. Il s'agira donc à présent d'approfondir chacun de ces travaux :\\
+Cette division technique a permis la formalisation d'un planning prévisionnel, basé sur une estimation du temps de travail nécessaire à la réalisation de chaque étape : \textit{cf.} annexe \ref{appendix:planification} : Planification détaillée. Six étapes ont donc été distinguées, dont la formalisation du besoin qui avait déjà été réalisée. Il s'agira donc à présent d'approfondir chacun de ces travaux :\\
 
 \begin{enumerate}
   \item Formalisation du besoin
@@ -516,11 +516,27 @@ Cette division technique a permis la formalisation d'un planning prévisionnel, 
 
 \section{Conception et implémentation}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
 \subsection{Solutions d'intégration du \textit{batch}}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Les solutions proposées devaient permettre l’enregistrement des relèves à publier d'une part et des éléments de contexte nécessaires aux traitements du \textit{batch} d'autre part. C'est en effet en récupérant ces différents éléments que les traitements asynchrones peuvent ensuite être réalisé. Deux solutions ont alors été identifiées :\\
+
+\begin{enumerate}
+  \item L'enregistrement de l'ensemble des informations dans un objet contextuel dédié enregistré en base de données, suivi d'un traitement \textit{batch} classique.
+  \item L'enregistrement des données via un élément de population, objet intégré à un autre composant du \textit{framework} d'\textit{efluid} permettant d'administrer des campagnes, soit un ensemble de processus organisés en différentes étapes de traitement pouvant être suivies et administrées en fonction de l'avancement général.
+\end{enumerate}
+\vspace{0.5cm}
+
+Pour les deux solutions, l’implémentation proposée a reposé sur l’utilisation de stratégies, le \textit{design pattern}, permettant de répondre à la contrainte de modularité présentée ci-dessus. L’implémentation consiste en effet à pouvoir associer à la validation de la relève le mode de demande de publication le plus adéquat en fonction du contexte : \textit{cf.} annexe \ref{appendix:strategy} : \textit{strategy}.\\
+
+Afin de choisir la meilleure des deux solutions, il a donc été nécessaire de formaliser leurs avantages et leurs inconvénients, d'un point de vue technique et fonctionnel.
+
+La solution n°1 présentait ainsi l'avantage d'avoir de bonnes performances et de nécessiter peu de paramétrage, du fait de sa simplicité. Elle est en revanche difficile à adapter en cas de complexification du processus de demande de publication et ne permet pas de gérer finement les erreurs éventuelles au cours des traitements, ceux-ci étant tous réalisés d'un bloc.
+
+La solution n°2 présentait quant à elle l'avantage de permettre un suivi des processus en cours, intégrant la revue des anomalies potentielles par un agent. Elle permettait en outre d'adapter facilement les processus appelés en cas de changement fonctionnel de la demande de publication : ajout possible de nouvelles étapes au processus, de nouveaux traitements, et/ou d'un système de gestion des anomalies. Cette seconde solution présentait néanmoins l'inconvénient de nécessiter un projet d'intégration complexe : injection de scripts, paramétrage, gestion d'habilitations. Elle présentait également des performances réduites et aurait nécessité une exploitation continue de la part des clients avec un paramétrage spécifique pour chacun d'entre eux.
+
+Compte-tenu du besoin spécifique lié ici à la demande de publication, la première solution a pu être retenue. Ce processus ne nécessite pas en effet de pouvoir gérer des anomalies en cours de traitement, ni de pouvoir être suivi via des vues dédiées. La demande de publication n'est en outre que très peu susceptible d'évoluer et de se complexifier a court ou moyen terme. En dépit des apports fonctionnels de la solution n°2, ces derniers ne suffisaient donc pas à justifier son adoption. La solution présentait en effet un coût plus important que ce soit au niveau de son implémentation, de ses performances, ou de son exploitation en production, pour un intérêt fonctionnel finalement très réduit. 
+
+La solution retenue a donc été la solution n°1, moins complexe, et répondant davantage au besoin direct, notamment en ce qui concerne le besoin de performance qu’implique la volumétrie des traitements.
 
 \subsection{Architecture générale}
 
@@ -644,7 +660,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \label{appendix:planification}
 
 \begin{itemize}
-  \item \textbf{Planification annuelle :}\\
+  \item \textbf{Planification générale du projet :}\\
 \end{itemize}
 
 \begin{center}
@@ -671,7 +687,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \vspace{1cm}
 
 \begin{itemize}
-  \item \textbf{Planification de l'implémentation :}\\
+  \item \textbf{Planification détaillée :}\\
 \end{itemize}
 
 \begin{center}
@@ -831,6 +847,8 @@ Les données suivantes permettent d'évaluer le nombre de relèves concernées p
 \chapter{\textit{Design Pattern}\footnote{Patron de conception} : Stratégie}
 \label{appendix:strategy}
 
+La stratégie est un patron de conception comportemental qui permet de définir des services et de les injecter de manière interchangeable dans un processus plus complexe. La mise en oeuvre de ce \textit{pattern} permet ainsi de respecter le principe OCP, \textit{Open/Closed Principle}\footnote{Principe ouvert/fermé}, qui garantit la bonne modularité du code. Ce principe suppose en effet qu'une entité (classe, fonction, module ...) doit être fermée à la modification directe mais ouverte à l'extension ; qu'il doit être possible, en d'autres termes, de complexifier certains traitements sans avoir à modifier fondamentalement les traitements existants.\\
+
 \begin{itemize}
   \item \textbf{Sans stratégie :}\\
 \end{itemize}
@@ -862,7 +880,9 @@ Les données suivantes permettent d'évaluer le nombre de relèves concernées p
     @enduml
   \end{plantuml}
 \end{center}
-\vspace{0.5cm}
+\clearpage
+
+Ici, l'ajout d'un nouveau sous-process nécessite forcément l'adaptation du processus principal :\\
 
 \begin{lstlisting}
 public class Process {
@@ -878,7 +898,7 @@ public class Process {
     }    
 }
 \end{lstlisting}
-\clearpage
+\vspace{0.5cm}
 
 \begin{itemize}
   \item \textbf{Avec stratégie :}\\
@@ -915,7 +935,9 @@ public class Process {
     @enduml
   \end{plantuml}
 \end{center}
-\vspace{0.5cm}
+\clearpage
+
+Avec le respect du \textit{pattern}, un nouveau sous-process peut être injecté comme dépendance du processus principal, de la même manière que les processus existants. Aucune modification n'est donc nécessaire dans la classe principale :\\
 
 \begin{lstlisting}
   public class Process {
@@ -930,7 +952,7 @@ public class Process {
           service.executerService();
       }    
   }
-  \end{lstlisting}
+\end{lstlisting}
 
 \chapter{\textit{Batch} : architecture et implémentation}
 \label{appendix:batch}
