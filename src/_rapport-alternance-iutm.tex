@@ -136,7 +136,7 @@
   \large{Promotion 2020-2021}
 \end{multicols}
 \vspace{2cm}
-\LARGE{\textit{Mise en place de traitements de masse relatifs à la relève des compteurs communiquants}}\\
+\LARGE{\textit{Mise en place de traitements asynchrones relatifs à la relève des compteurs communiquants}}\\
 \vspace{2cm}
 \large{\textbf{Mémoire présenté en septembre 2021 par}}\\
 \vspace{0.5cm}
@@ -198,7 +198,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-Ce mémoire a pour objectif de présenter les travaux réalisés dans mon entreprise d'accueil, \textit{Efluid}, dans le cadre de la licence professionnelle génie logiciel, réalisée en alternance. Cette année fait suite à l'obtention de mon DUT informatique réalisée en année spéciale.
+Ce mémoire a pour objectif de présenter les travaux réalisés dans mon entreprise d'accueil, \textit{Efluid}, dans le cadre de la licence professionnelle génie logiciel, réalisée en alternance. Cette année fait suite à l'obtention de mon DUT informatique réalisé en année spéciale.
 
 Ayant déjà réalisé mon stage de fin de DUT chez \textit{Efluid}, j'ai pu rapidement postuler à l'une des offres d'alternance que proposait le service qui m'avait déjà accueilli. Dans la continuité de mes treize semaines de stage, j'ai alors pu réintégrer ce même service pour mon année d'alternance.\\
 
@@ -248,7 +248,7 @@ Cette dimension modulaire de l'application donne lieu à une division fonctionne
 
 Outre les services de développements fonctionnels dans lesquels sont intégrés la majorité des développeurs, il existe également des services chargés de missions transverses, comme par exemple le déploiement de l'application ou le développement des composants élémentaires du programme. C'est une partie du processus de production que j'ai moins été en mesure d'aborder au cours de mon année d'alternance, mais avec laquelle j'ai néanmoins été en contact, puisque certains de ces services sont aussi chargés de la gestion des environnements de développement et de la maintenance des infrastructures de \textit{versionning}.\\
 
-\textit{Efluid} a été développé à l'initiative de l'UEM (\textit{cf.} figure \ref{uem}), en partenariat avec \textit{Enedis} (\textit{cf.} figure \ref{enedis}), qui émane d'EDF (\textit{cf.} Annexe \ref{appendix:efluid-gouvernance} : La gouvernance d'\textit{Efluid}) et profite donc de l'expertise de ces groupes afin de répondre au mieux aux besoins du secteur de l'énergie. La société est devenu un acteur important dans gestion des systèmes d'information de ce secteur et emploie aujourd'hui plus de deux-cent salariés. \textit{Efluid} compte \textit{Enedis} parmi ses clients mais aussi un grand nombre de régies locales dont par exemple l'\textit{Electricité de Strasbourg}. L'entreprise répond également a des appels d'offre à l'étranger et pourrait donc à terme prendre une dimension internationale.
+\textit{Efluid} a été développé à l'initiative de l'UEM (\textit{cf.} figure \ref{uem}), en partenariat avec \textit{Enedis} (\textit{cf.} figure \ref{enedis}), qui émane d'EDF (\textit{cf.} Annexe \ref{appendix:efluid-gouvernance} : La gouvernance d'\textit{Efluid}) et profite donc de l'expertise de ces groupes afin de répondre au mieux aux besoins du secteur de l'énergie. La société est devenu un acteur important dans la gestion des systèmes d'information de ce secteur et emploie aujourd'hui plus de deux-cent salariés. \textit{Efluid} compte \textit{Enedis} parmi ses clients mais aussi un grand nombre de régies locales dont par exemple l'\textit{Electricité de Strasbourg}. L'entreprise répond également a des appels d'offre à l'étranger et pourrait donc à terme prendre une dimension internationale.
 
 \section{Spécificités du logiciel}
 
@@ -314,7 +314,7 @@ Dans le cadre de mes travaux, j'ai pu appréhender l'environnement de développe
 
 \subsection{Environnement de développement}
 
-L'application \textit{Efluid} est développée en \textit{Java} (\textit{cf.} figure \ref{java}). C'est un langage dont j'avais déjà une certaine maîtrise avant de rejoindre l'entreprise et je n'ai donc pas eut à suivre de formation dédiée. Au delà du langage utilisé, \textit{Efluid} est  basé sur une architecture et un \textit{framework} complexe, développé initialement par CGI. La familiarisation avec la structure générale de l'application a quant à elle été plus longue et a nécessité un suivi continue durant mon année d'alternance. 
+L'application \textit{Efluid} est développée en \textit{Java} (\textit{cf.} figure \ref{java}). C'est un langage dont j'avais déjà une certaine maîtrise avant de rejoindre l'entreprise et je n'ai donc pas eut à suivre de formation dédiée. Au delà du langage utilisé, \textit{Efluid} est  basé sur une architecture et un \textit{framework} complexe, développé initialement par CGI. La familiarisation avec la structure générale de l'application a quant à elle été plus longue et a nécessité un suivi continu durant mon année d'alternance. 
 
 J'ai en outre bénéficié d'une formation fonctionnelle sur le logiciel, destinée aux nouveaux entrants et aux clients d'\textit{Efluid}. Cette formation portait sur des modules spécifiques de l'application, et sur l'utilisation proprement dite du logiciel. Je n'ai pour ma part suivi que la formation qui portait sur le fonctionnement du domaine "consommation" ; celle-ci m'a permis de mieux appréhender les différentes fonctionnalités du logiciel ainsi que le fonctionnement général de l'application.
 
@@ -409,7 +409,7 @@ Comme indiqué en introduction, le projet principal qui m'a été attribué cons
 
 De nombreux \textit{batchs} sont intégrés à la solution applicative d'\textit{Efluid}. Comme indiqué dans la présentation générale du logiciel, les mesures de performance de l'application donnent lieu à des impératifs contractuels. Le recours à des traitements \textit{batchs} permet donc d'alléger les opérations réalisées de manière synchrone et donc d'écourter les temps de chargement lors du parcours utilisateur. Le gain de performances constituait ainsi le principal objectif de mon projet, et ce concernant un traitement en particulier correspondant à la demande de publication de la relève.
 
-D'un point de vue fonctionnel, la demande de publication consiste à déterminer, à partir d'une relève, si les mesures enregistrées doivent être communiquées à des acteurs externes selon des critères prédéfinis, et, le cas échéant, à associer à la relève un objet portant les informations de publication. A noter que la publication proprement dite, à savoir la transmission effective des données aux acteurs concernés, est réalisée par un \textit{batch} dédié ; le périmètre de la demande de publication s'arrête quant à lui au marquage des relèves qui nécessitent une publication. Dans la situation initiale, la demande de publication était donc gérée intégralement au fil de l'eau, ce qui entrainait des temps de traitements trop longs, pouvant excéder les objectifs de performance. L'implémentation d'un \textit{batch} dédié à la demande de publication avait donc pour objectif d'alléger ces temps de traitement.\\
+D'un point de vue fonctionnel, la demande de publication consiste à déterminer, à partir d'une relève, si les mesures enregistrées doivent être communiquées à des acteurs externes selon des critères prédéfinis et, le cas échéant, à associer à la relève un objet portant les informations de publication. A noter que la publication proprement dite, à savoir la transmission effective des données aux acteurs concernés, est réalisée par un \textit{batch} dédié ; le périmètre de la demande de publication s'arrête quant à lui au marquage des relèves qui nécessitent une publication. Dans la situation initiale, la demande de publication était donc gérée intégralement au fil de l'eau, ce qui entrainait des temps de traitements trop longs, pouvant excéder les objectifs de performance. L'implémentation d'un \textit{batch} dédié à la demande de publication avait donc pour objectif d'alléger ces temps de traitement.\\
 
 L'autre objectif de mon projet consistait à simplifier l'appel de la demande de publication de la relève. En l'état, la demande de publication est en effet appelée au cours de différents processus dispersés dans le code de l'application. Les traitements sont donc répétés et peuvent donner lieu à des implémentations différentes selon les contextes. Outre le gain de performance, mon projet avait donc également pour but d'implémenter un point d'accès unique à la demande de publication.
 
@@ -435,7 +435,7 @@ L'importance de la quantité de données à traiter a également eut un impact s
 
 En parallèle de l'analyse volumétrique, il a également été nécessaire de lister et de reproduire les différents contextes applicatifs dans lesquels était appelée la demande de publication : \textit{cf.} annexe \ref{appendix:process}, contextes de la demande de publication.\\
 
-L'identification de ces différents contextes a ainsi permis de mieux cerner les implications potentielles d'une modification des traitements existants. La reproduction des contextes a par ailleurs servi à tester la non-régression de l'implémentation et à identifier la spécificité de chaque traitement. 
+L'identification de ces différents contextes a ainsi permis de mieux cerner les implications potentielles d'une modification des traitements existants. La reproduction des contextes a par ailleurs servi à tester la non-régression de l'implémentation et à identifier les données nécessaires pour chaque traitement. 
 
 Dans le cadre d'un traitement en mode \textit{batch}, il faut en effet noter que l'ensemble des données nécessaire aux processus appelés doit être chargé avant leur exécution. Il était donc important de pouvoir cerner les aspects fonctionnels propres à chaque contexte, de sorte que les traitements asynchrones puissent répliquer les traitements prévus. L'un des principaux critère à prendre en compte a par exemple été la distinction entre les relèves validées via un compte-rendu d'intervention (CRI) ou via d'autres processus. Mais il ne s'agit là que d'un des critères ayant une influence sur la demande de publication.
 
@@ -470,7 +470,7 @@ Conformément aux processus de production mis en place par l'entreprise, ce proj
 
 Avec l'accord des services d'analyse, et compte tenu de ces contraintes, il a finalement été décidé de réduire le périmètre d'application du projet. En effet, afin de répondre à la contrainte d'acceptabilité du projet posée notamment par \textit{Enedis}, l'objectif de migrer l'ensemble des appels de la demande de publication a finalement été réduit. Le projet a ainsi consisté à ne migrer que la demande de publication réalisée au moment de l'import des relèves des compteurs communiquants, ou compteurs \textit{Linky} (\textit{cf.} figure \ref{linky}). Cet import est réalisé via le module d'interface "LKY06" ; la mention ultérieure de ce module renverra donc à l'ensemble du process d'import des relèves \textit{Linky}.
 
-Malgré la réduction du périmètre fonctionnel, il a néanmoins été convenu que cette solution, si elle finissait par être retenu par le client, devait garantir une migration facile d'autre processus. Bien que les objectifs initiaux du projet aient été réduits, il a donc fallu tenir compte de la potentielle migration d'autres traitements vers la solution à développer en proposant une implémentation qui puisse être modulable.
+Malgré la réduction du périmètre fonctionnel, il a néanmoins été convenu que cette solution, si elle finissait par être retenu par le client, devait garantir une migration facile d'autres processus. Bien que les objectifs initiaux du projet aient été réduits, il a donc fallu tenir compte de la potentielle migration d'autres traitements vers la solution à développer en proposant une implémentation qui puisse être facilement modulable.
 
 \subsection{Description fonctionnelle du \textit{batch}}
 
@@ -495,7 +495,7 @@ La mise en place de la sélection des relèves, permettant de déporter une part
 \begin{itemize}
   \item \textbf{Contraintes de modularité : }
   \begin{itemize}
-    \item Les développements visaient à pouvoir sélectionner les relèves enregistrées par l'interface LKY06, dont la demande de publication devait être gérée de façon asynchrone, mais sans altérer les processus exécutés de manière synchrone dans les autres contextes.
+    \item Les développements visaient à pouvoir sélectionner les relèves enregistrées par l'interface LKY06, dont la demande de publication devaient être gérée de façon asynchrone, mais sans altérer les processus exécutés de manière synchrone dans les autres contextes.
     \item L'intégration devait cependant permettre la migration ultérieure d'autres processus de la demande de publication synchrone vers la demande de publication asynchrone. 
   \end{itemize}
   \vspace{0.5cm}
@@ -543,13 +543,13 @@ La solution retenue a donc été la solution 1, moins complexe, et répondant da
 
 \subsection{Architecture générale}
 
-Les premiers développements consacrés au \textit{batch} proprement dit ont consisté à implémenter son squelette sur la base de l'architecture prévue par le framework : \textit{cf.} annexe \ref{appendix:batch} : architecture batch.\\
+Les premiers développements consacrés au \textit{batch} proprement dit ont consisté à implémenter son squelette sur la base de l'architecture prévue par le \textit{framework} : \textit{cf.} annexe \ref{appendix:batch} : architecture batch.\\
 
 L'architecture \textit{batch} d'\textit{Efluid} peut être décomposée de deux manière, selon une division technique d'une part, et une division fonctionnelle d'autre part (\textit{cf.} figure \ref{division}).
 
 D'un point de vue technique on peut en effet distinguer les classes de traitement\footnote{Classes héritant ici de \textit{ProgramBatch} et \textit{AbstractAppBatchJob}. \textit{Cf.} annexe \ref{appendix:batch}.} des DAO\footnote{\textit{Data Access Object}.}, les classes de gestion des données\footnote{Classes héritant ici de \textit{ProgramBatchDAO} et \textit{BatchJobDAO}. \textit{Cf.} annexe \ref{appendix:batch}.}. Les premières sont chargées de l'implémentation des processus métiers, à savoir ici de la réalisation de la demande de publication, tandis que les secondes sont chargées de réaliser les opérations en base de données sur la base de requêtes SQL : sélections, mise à jour, création et suppression de données.
 
-D'un point de vue fonctionnel, on peut diviser ces mêmes classes en séparant celles liées au \textit{program} du \textit{batch}\footnote{Classes héritant ici de \textit{ProgramBatch} et \textit{ProgramBatchDAO}. \textit{Cf.} annexe \ref{appendix:batch}.}, et celles liées au \textit{job}\footnote{Classes héritant ici de \textit{AbstractAppBatchJob} et \textit{BatchJobDAO}. \textit{Cf.} annexe \ref{appendix:batch}.}. La partie \textit{program} du \textit{batch} permet de gérer les traitement d'initialisation et de finalisation du batch via le \textit{thread} d'exécution de processus. La partie \textit{job} consiste quant à elle à implémenter les traitements pouvant être parallélisés et qui seront donc exécutés sur différents \textit{threads} autonomes.\\
+D'un point de vue fonctionnel, on peut diviser ces mêmes classes en séparant celles liées au \textit{program} du \textit{batch}\footnote{Classes héritant ici de \textit{ProgramBatch} et \textit{ProgramBatchDAO}. \textit{Cf.} annexe \ref{appendix:batch}.}, et celles liées au \textit{job}\footnote{Classes héritant ici de \textit{AbstractAppBatchJob} et \textit{BatchJobDAO}. \textit{Cf.} annexe \ref{appendix:batch}.}. La partie \textit{program} du \textit{batch} permet de gérer les traitement d'initialisation et de finalisation du batch via le \textit{thread} principal du processus. La partie \textit{job} consiste quant à elle à implémenter les traitements pouvant être parallélisés et qui seront donc exécutés sur différents \textit{threads} autonomes.\\
 
 L'implémentation du batch de demande de publication a donc donné lieu à la création de quatre classes principales, dépendant en outre de classes annexes assurant principalement la gestion des erreurs, des statistiques et de constantes diverses :\\
 
@@ -578,13 +578,13 @@ L'implémentation du batch de demande de publication a donc donné lieu à la cr
   \end{center}
 \end{figure}
 
-Le \textit{batch} devant chargé tous les objets métiers mobilisés en amont des traitements, il a d'abord été nécessaire de lister l'ensemble des données nécessaires au bon déroulement du processus. Un travail d'analyse a donc permis de déterminer l'ensemble des informations impliquées dans la demande de publication de la relève, dans le contexte particulier de l'interface LKY06. Compte-tenu de la complexité des traitements, les chargements ont néanmoins du être complétés durant le développement, suite à des anomalies rencontrées lors du test de certains contextes.
+Le \textit{batch} devant charger tous les objets métiers mobilisés en amont des traitements, il a d'abord été nécessaire de lister l'ensemble des données nécessaires au bon déroulement du processus. Un travail d'analyse a donc permis de déterminer l'ensemble des informations impliquées dans la demande de publication de la relève, dans le contexte particulier de l'interface LKY06. Compte-tenu de la complexité des traitements, les chargements ont néanmoins du être complétés durant le développement, suite à des anomalies rencontrées lors du test de certains contextes.
 
 Les chargements sont implémentés au niveau des classes DAO et concernent deux types d'objets et de données :\\
 
 \begin{itemize}
   \item \textbf{Les données de paramétrage} : Chargées au niveau du processus principal (\textit{Program}), ces données statiques sont partagées par les différents traitements parallèles (\textit{Jobs}). Parmi ces données, on peut par exemple citer les différents critères de publication pouvant être mobilisés afin de déterminer si la relève nécessite une publication ou non, ou encore les différents gestionnaires de concession pouvant être paramétrés comme destinataires ds publications créées.
-  \item \textbf{Les données opérationnelles} : Ces données sont chargées dans les traitements parallèles et sont donc propres à chaque relève traitée. Les traitements parallèles commencent donc par charger ces données par lot avant de procéder à la demande de publication. Ces données sont constituées par l'ensemble des informations portant sur une relève permettant de déterminer s'il y a lieu de la publier et sur les informations permettant d'initialiser, le cas échéant, la publication des mesures.
+  \item \textbf{Les données opérationnelles} : Ces données sont chargées dans les traitements parallèles et sont donc propres à chaque relève traitée. Les traitements parallèles commencent donc par charger ces données par lot avant de procéder à la demande de publication. Ces données sont constituées de l'ensemble des informations portant sur une relève permettant de déterminer s'il y a lieu de la publier et sur les informations permettant d'initialiser, le cas échéant, la publication des mesures.
 \end{itemize}
 \vspace{0.5cm}
 
@@ -629,7 +629,7 @@ Suite à l'implémentation du \textit{batch}, certains contextes potentiellement
 
 Ces tests ayant été concluant, il a ensuite été nécessaire de vérifier les bonnes performances de l'ensemble des traitements mis en place. Suite à la mise en place d'un contexte dédié, il a donc été possible d'estimer le temps d'exécution moyen du \textit{batch} ainsi que le temps de traitement par relève, en reproduisant le plus fidèlement possible les condition d'exécution du \textit{batch} sur les serveurs de production (\textit{cf.} figure \ref{logs}). Ces mesures ont également été concluantes.
 
-La dernière étape du projet consistait donc enfin en l'implémentation de tests d'intégration chargés de vérifier l'exécution du batch dans son ensemble. La rédaction de ces tests s'est avéré être particulièrement compliquée, compte-tenu de la complexité des contexte à mettre en place. En effet, la nature même de ces tests implique la création de contextes entiers devant être valides et pertinent d'un point de vue fonctionnel. La mise en place de ces contextes requiert donc une bonne compréhension fonctionnelle du logiciel dans son ensemble, et une bonne maîtrise de la structure générale de l'application.\\
+La dernière étape du projet consistait donc enfin en l'implémentation de tests d'intégration chargés de vérifier l'exécution du batch dans son ensemble. La rédaction de ces tests s'est avéré être particulièrement compliquée, compte-tenu de la complexité des contextes à mettre en place. En effet, la nature même de ces tests implique la création de contextes entiers devant être valides et pertinent d'un point de vue fonctionnel. La mise en place de ces contextes requiert donc une bonne compréhension fonctionnelle du logiciel dans son ensemble, et une bonne maîtrise de la structure générale de l'application.\\
 
 \begin{center}
 \noindent*\\
